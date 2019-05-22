@@ -276,18 +276,85 @@ module.exports = {
         type,
         date
       })
-    ){
+    ) {
       res.send({
-        msg:'发布成功',
-        code:201
+        msg: '发布成功',
+        code: 201
+      })
+    } else {
+      res.send({
+        msg: '发布失败',
+        code: 400
+      })
+    }
+    // 类型判断
+    // res.send(req.file)
+  },
+  // 文章编辑
+  article_edit(req, res) {
+    const id = req.body.id
+    // 获取数据
+    const title = req.body.title
+    const type = req.body.type
+    const intro = req.body.intro
+    let cover
+
+    // id不能为空
+    if (!id || isNaN(id)) {
+      res.send({
+        msg: 'id不能为空',
+        code: 400
+      })
+      return
+    }
+    // 标题判断
+    if (!title) {
+      res.send({
+        msg: '标题不能为空哦',
+        code: 400
+      })
+      return
+    }
+    // 标题判断
+    if (!type) {
+      res.send({
+        msg: '类型不能为空哦',
+        code: 400
+      })
+      return
+    }
+
+    // 允许的图片类型
+    if (req.file) {
+      if (
+        fs.size > 1024 * 1024 ||
+        ['image/gif', 'image/png', 'image/jpeg'].indexOf(req.file.mimetype) ==
+          -1
+      ) {
+        res.send({
+          msg: '文件大小或类型不对，请检查',
+          code: 400
+        })
+        fs.unlinkSync(path.join(__dirname, '../', req.file.path))
+        return
+      }
+    }
+    // 设置封面
+    cover = `/static/articles/${req.file.filename}`
+    // 修改文章
+    if(db.editArticle({ id, title, type, intro, cover })){
+      res.send({
+        msg:'修改成功',
+        code:200
       })
     }else{
       res.send({
-        msg:'发布失败',
+        msg:'修改失败，请检查参数',
         code:400
       })
     }
-      // 类型判断
-      // res.send(req.file)
+
+    // 类型判断
+    // res.send(req.file)
   }
 }

@@ -34,6 +34,8 @@ router.get('/article_category_visit',adminController.article_category_visit)
 router.get('/search',adminController.search)
 // 文章发布
 router.post('/article_publish',upload.single('cover'),adminController.article_publish)
+// 文章修改
+router.post('/article_edit',upload.single('cover'),adminController.article_edit)
 
 // 暴露
 module.exports = router

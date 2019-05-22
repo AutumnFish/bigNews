@@ -57,29 +57,56 @@ module.exports = {
     }
   },
   // 添加文章
-  addArticle({
-    title,
-    intro,
-    cover,
-    type,
-    date,
-  }) {
+  addArticle({ title, intro, cover, type, date }) {
     const article = this.getArticle()
     article.push({
-      id:article.length,
+      id: article.length,
       title,
       intro,
       cover,
       type,
-      read:0,
-      comment:0,
+      read: 0,
+      comment: 0,
       date,
-      state:'草稿',
-      isDelete:false
+      state: '草稿',
+      isDelete: false
     })
     // console.log(article[article.length-1]);
     try {
-      fs.writeFileSync(path.join(basePath,'article.json'),JSON.stringify(article))
+      fs.writeFileSync(
+        path.join(basePath, 'article.json'),
+        JSON.stringify(article)
+      )
+      return true
+    } catch (error) {
+      return false
+    }
+  },
+  // 修改文章
+  editArticle({ id, title, intro, cover, type }) {
+    let article = this.getArticle()
+    if (!article[id]) {
+      return false
+    }
+    article[id].title = title
+    article[id].intro = intro
+    article[id].type = type
+    if (cover) {
+      // 获取图片名
+      const fileArr = article[id].cover.split('/')
+      // 删除之前的图片
+      fs.unlinkSync(
+        path.join(__dirname, '../uploads/articles', fileArr[fileArr.length - 1])
+      )
+      article[id].cover = cover
+    }
+
+    // 保存
+    try {
+      fs.writeFileSync(
+        path.join(basePath, 'article.json'),
+        JSON.stringify(article)
+      )
       return true
     } catch (error) {
       return false
