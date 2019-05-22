@@ -41,5 +41,31 @@ module.exports = {
       )
       return article
     }
+  },
+  getUser() {
+    try {
+      return JSON.parse(
+        fs.readFileSync(path.join(basePath, 'user.json'), 'utf-8')
+      )
+    } catch (err) {
+      const user = {
+        nick_name: '小小黑',
+        user_pic: '/static/02.jpg'
+      }
+      fs.writeFileSync(path.join('user.json'), JSON.stringify(user))
+      return user
+    }
+  },
+  // 评论
+  getComments() {
+    try {
+      return JSON.parse(
+        fs.readFileSync(path.join(basePath, 'comments.json'), 'utf-8')
+      )
+    } catch (err) {
+      const comments = []
+      fs.writeFileSync(path.join('comments.json'), JSON.stringify(comments))
+      return comments
+    }
   }
 }

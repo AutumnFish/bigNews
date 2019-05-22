@@ -15,6 +15,18 @@ router.use(bodyParser.urlencoded({ extended: false }))
 router.post('/login',adminController.login)
 // 登出
 router.post('/logout',adminController.logout)
+// 获取用户信息
+router.get('/getuser',adminController.getuser)
+// 获取用户信息
+router.get('/article_count',adminController.article_count)
+// 获取评论数量统计
+router.get('/comment_count',adminController.comment_count)
+// 月新增文章数
+router.get('/month_article_count',adminController.month_article_count)
+// 文章类型数量统计
+router.get('/article_category_count',adminController.article_category_count)
+// 月文章访问量
+router.get('/article_category_visit',adminController.article_category_visit)
 
 // 暴露
 module.exports = router
