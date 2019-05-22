@@ -14,10 +14,6 @@ module.exports = {
       res.send({
         msg: '登录成功',
         code: 200,
-        info: {
-          user_name,
-          user_icon: config.serverAddress + '/uploads/2.jpg'
-        }
       })
     } else {
       res.send({
