@@ -56,6 +56,35 @@ module.exports = {
       return user
     }
   },
+  // 添加文章
+  addArticle({
+    title,
+    intro,
+    cover,
+    type,
+    date,
+  }) {
+    const article = this.getArticle()
+    article.push({
+      id:article.length,
+      title,
+      intro,
+      cover,
+      type,
+      read:0,
+      comment:0,
+      date,
+      state:'草稿',
+      isDelete:false
+    })
+    // console.log(article[article.length-1]);
+    try {
+      fs.writeFileSync(path.join(basePath,'article.json'),JSON.stringify(article))
+      return true
+    } catch (error) {
+      return false
+    }
+  },
   // 评论
   getComments() {
     try {

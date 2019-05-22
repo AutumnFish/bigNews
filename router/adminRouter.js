@@ -6,6 +6,9 @@ const router = express.Router()
 const adminController = require('../controllers/adminController')
 // 导入bodyParser中间件
 const bodyParser = require('body-parser')
+// 导入multer中间件 
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/articles/' })
 
 // 注册body-parser中间件
 // parse application/x-www-form-urlencoded
@@ -29,6 +32,8 @@ router.get('/article_category_count',adminController.article_category_count)
 router.get('/article_category_visit',adminController.article_category_visit)
 // 文章搜索
 router.get('/search',adminController.search)
+// 文章发布
+router.post('/article_publish',upload.single('cover'),adminController.article_publish)
 
 // 暴露
 module.exports = router

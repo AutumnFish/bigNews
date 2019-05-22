@@ -7,6 +7,9 @@ const message = require(path.join(__dirname, '../utils/message'))
 const config = require(path.join(__dirname, '../utils/config'))
 // 获取用户信息
 const db = require(path.join(__dirname, '../utils/db'))
+// 导入fs
+const fs = require('fs')
+
 module.exports = {
   // 用户登录
   login(req, res) {
@@ -219,5 +222,72 @@ module.exports = {
       code: 200,
       data: article
     })
+  },
+  // 文章发布
+  article_publish(req, res) {
+    // 获取数据
+    const title = req.body.title || ''
+    const type = req.body.type || 1
+    const date = req.body.date || moment().format('YYYY-MM-DD')
+    const intro = req.body.intro || ''
+    let cover
+    // 允许的图片类型
+    if (!req.file) {
+      res.send({
+        msg: '封面不能为空哦',
+        code: 400
+      })
+      return
+    } else if (
+      fs.size > 1024 * 1024 ||
+      ['image/gif', 'image/png', 'image/jpeg'].indexOf(req.file.mimetype) == -1
+    ) {
+      res.send({
+        msg: '文件大小或类型不对，请检查',
+        code: 400
+      })
+      fs.unlinkSync(path.join(__dirname, '../', req.file.path))
+      return
+    }
+    // 标题判断
+    if (!title) {
+      res.send({
+        msg: '标题不能为空哦',
+        code: 400
+      })
+      return
+    }
+    // 标题判断
+    if (!type) {
+      res.send({
+        msg: '类型不能为空哦',
+        code: 400
+      })
+      return
+    }
+    // 设置封面
+    cover = `/static/articles/${req.file.filename}`
+    // 获取文章
+    if (
+      db.addArticle({
+        title,
+        intro,
+        cover,
+        type,
+        date
+      })
+    ){
+      res.send({
+        msg:'发布成功',
+        code:201
+      })
+    }else{
+      res.send({
+        msg:'发布失败',
+        code:400
+      })
+    }
+      // 类型判断
+      // res.send(req.file)
   }
 }
