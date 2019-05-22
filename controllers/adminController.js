@@ -171,8 +171,53 @@ module.exports = {
               count: 300
             }
           ]
-        },
+        }
       ]
+    })
+  },
+  // 文章搜索
+  search(req, res) {
+    // 获取提交的数据
+    const key = req.query.key || ''
+    const type = req.query.type || ''
+    const state = req.query.state || ''
+    const page = req.query.page || 1
+    const perpage = req.query.perpage || 6
+
+    // 数据类型判断
+    if (isNaN(page) || isNaN(perpage)) {
+      message.invalidParameter(res)
+      return
+    }
+    // 文章检索
+    let article = db.getArticle()
+    // 类型筛选
+    article = article.filter(v => {
+      // 类型筛选
+      if (type == '') return true
+      return v.type == type
+    })
+    // 状态筛选
+    article = article.filter(v => {
+      // 类型筛选
+      if (state == '') return true
+      return v.state == state
+    })
+    // 关键字
+    article = article.filter(v => {
+      // 类型筛选
+      if (key == '') return true
+      try {
+        return v.title.indexOf(key) != -1 || v.intro.indexOf(key) != -1
+      } catch (error) {
+        return false
+      }
+    })
+
+    res.send({
+      msg: '搜索成功',
+      code: 200,
+      data: article
     })
   }
 }

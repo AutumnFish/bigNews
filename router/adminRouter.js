@@ -27,6 +27,8 @@ router.get('/month_article_count',adminController.month_article_count)
 router.get('/article_category_count',adminController.article_category_count)
 // 月文章访问量
 router.get('/article_category_visit',adminController.article_category_visit)
+// 文章搜索
+router.get('/search',adminController.search)
 
 // 暴露
 module.exports = router
