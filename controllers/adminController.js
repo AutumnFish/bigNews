@@ -266,7 +266,7 @@ module.exports = {
       return
     }
     // 设置封面
-    cover = `/static/articles/${req.file.filename}`
+    cover = config.serverAddress+`/static/articles/${req.file.filename}`
     // 获取文章
     if (
       db.addArticle({
@@ -340,21 +340,54 @@ module.exports = {
       }
     }
     // 设置封面
-    cover = `/static/articles/${req.file.filename}`
+    cover = config.serverAddress+`/static/articles/${req.file.filename}`
     // 修改文章
-    if(db.editArticle({ id, title, type, intro, cover })){
+    if (db.editArticle({ id, title, type, intro, cover })) {
       res.send({
-        msg:'修改成功',
-        code:200
+        msg: '修改成功',
+        code: 200
       })
-    }else{
+    } else {
       res.send({
-        msg:'修改失败，请检查参数',
-        code:400
+        msg: '修改失败，请检查参数',
+        code: 400
       })
     }
 
     // 类型判断
     // res.send(req.file)
+  },
+  // 文章删除
+  article_delete(req, res) {
+    // 获取id
+    if (!req.query.id) {
+      res.send({
+        msg: 'id不能为空',
+        code: 400
+      })
+      return
+    }
+    // 获取id
+    const id = req.query.id
+    if (id > db.getArticle().length || isNaN(id)) {
+      res.send({
+        msg: 'id无效,请检查',
+        code: 400
+      })
+      return
+    }
+
+    // 软删除
+    if (db.editArticle({ id, isDelete: true })) {
+      res.send({
+        msg: '删除成功',
+        code: 200
+      })
+    } else {
+      res.send({
+        msg: '删除失败，请检查',
+        code: 200
+      })
+    }
   }
 }

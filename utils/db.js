@@ -83,24 +83,36 @@ module.exports = {
     }
   },
   // 修改文章
-  editArticle({ id, title, intro, cover, type }) {
+  editArticle({ id, title, intro, cover, type, isDelete }) {
     let article = this.getArticle()
-    if (!article[id]) {
+    let editOne = article.filter(v=>{
+      return v.id==id
+    })[0]
+    if (!editOne) {
       return false
     }
-    article[id].title = title
-    article[id].intro = intro
-    article[id].type = type
+    if (title) {
+     editOne.title = title
+    }
+    if (intro) {
+     editOne.intro = intro
+    }
+    if (type) {
+     editOne.type = type
+    }
     if (cover) {
       // 获取图片名
-      const fileArr = article[id].cover.split('/')
+      const fileArr =editOne.cover.split('/')
       // 删除之前的图片
       fs.unlinkSync(
         path.join(__dirname, '../uploads/articles', fileArr[fileArr.length - 1])
       )
-      article[id].cover = cover
+     editOne.cover = cover
     }
-
+    if (isDelete) {
+     editOne.isDelete = isDelete
+    }
+    // console.log(editOne);
     // 保存
     try {
       fs.writeFileSync(

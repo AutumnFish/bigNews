@@ -1,3 +1,3 @@
 module.exports = {
-  serverAddress:'localhost:8000'
+  serverAddress:'http://localhost:8000'
 }
