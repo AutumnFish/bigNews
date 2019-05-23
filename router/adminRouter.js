@@ -38,6 +38,12 @@ router.post('/article_publish',upload.single('cover'),adminController.article_pu
 router.post('/article_edit',upload.single('cover'),adminController.article_edit)
 // 文章删除
 router.get('/article_delete',adminController.article_delete)
+// 分类获取
+router.get('/category_search',adminController.category_search)
+// 分类新增
+router.post('/category_add',adminController.category_add)
+// 分类编辑
+router.post('/category_edit',adminController.category_edit)
 
 // 暴露
 module.exports = router

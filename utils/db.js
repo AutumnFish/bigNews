@@ -85,32 +85,32 @@ module.exports = {
   // 修改文章
   editArticle({ id, title, intro, cover, type, isDelete }) {
     let article = this.getArticle()
-    let editOne = article.filter(v=>{
-      return v.id==id
+    let editOne = article.filter(v => {
+      return v.id == id
     })[0]
     if (!editOne) {
       return false
     }
     if (title) {
-     editOne.title = title
+      editOne.title = title
     }
     if (intro) {
-     editOne.intro = intro
+      editOne.intro = intro
     }
     if (type) {
-     editOne.type = type
+      editOne.type = type
     }
     if (cover) {
       // 获取图片名
-      const fileArr =editOne.cover.split('/')
+      const fileArr = editOne.cover.split('/')
       // 删除之前的图片
       fs.unlinkSync(
         path.join(__dirname, '../uploads/articles', fileArr[fileArr.length - 1])
       )
-     editOne.cover = cover
+      editOne.cover = cover
     }
     if (isDelete) {
-     editOne.isDelete = isDelete
+      editOne.isDelete = isDelete
     }
     // console.log(editOne);
     // 保存
@@ -134,6 +134,67 @@ module.exports = {
       const comments = []
       fs.writeFileSync(path.join('comments.json'), JSON.stringify(comments))
       return comments
+    }
+  },
+  // 获取评论
+  getCategory() {
+    try {
+      return JSON.parse(
+        fs.readFileSync(path.join(basePath, 'category.json'), 'utf-8')
+      )
+    } catch (error) {
+      let data = [
+        {
+          id: 1,
+          name: '科技',
+          slug: 'keji',
+          isDelete: false
+        },
+        {
+          id: 2,
+          name: '财经',
+          slug: 'money',
+          isDelete: false
+        }
+      ]
+      fs.writeFileSync(
+        path.join(basePath, 'category.json'),
+        JSON.stringify(data)
+      )
+      return data
+    }
+  },
+  addCategory({ name, slug }) {
+    let categorys = this.getCategory()
+    categorys.push({
+      id: categorys.length + 1,
+      name,
+      slug,
+      isDelete: false
+    })
+    try {
+      fs.writeFileSync(
+        path.join(basePath, 'category.json'),
+        JSON.stringify(categorys)
+      )
+      return true
+    } catch (error) {
+      return false
+    }
+  },
+  editCategory({ id, name, slug }) {
+    let categorys = this.getCategory()
+    categorys[id - 1].name = name
+    categorys[id - 1].slug = slug
+
+    try {
+      fs.writeFileSync(
+        path.join(basePath, 'category.json'),
+        JSON.stringify(categorys)
+      )
+      return true
+    } catch (error) {
+      return false
     }
   }
 }
