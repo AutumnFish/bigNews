@@ -517,7 +517,6 @@ module.exports = {
       return
     }
 
-
     // 调用修改方法
     if (db.editCategory({ id, name, slug })) {
       res.send({
@@ -526,7 +525,42 @@ module.exports = {
       })
     } else {
       res.send({
-        msg: '修改失败',
+        msg: '修改失败,请重试',
+        code: 400
+      })
+    }
+  },
+  // 分类删除
+  category_delete(req, res) {
+    // 获取数据
+    if (!req.body.id || !req.body.id.trim || isNaN(req.body.id)) {
+      res.send({
+        msg: 'id不对哦，请检查',
+        code: 400
+      })
+    }
+    // 获取数据
+    const id = req.body.id
+    if (
+      db.getCategory().filter(v => {
+        return v.id == id
+      }).length != 1
+    ) {
+      res.send({
+        msg: 'id不存在哦',
+        code: 400
+      })
+      return
+    }
+    const isDelete = true
+    if (db.editCategory({id,isDelete})) {
+      res.send({
+        msg: '删除成功',
+        code: 200
+      })
+    } else {
+      res.send({
+        msg: '删除失败,请重试',
         code: 400
       })
     }

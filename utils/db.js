@@ -182,10 +182,19 @@ module.exports = {
       return false
     }
   },
-  editCategory({ id, name, slug }) {
+  editCategory({ id, name, slug, isDelete }) {
     let categorys = this.getCategory()
-    categorys[id - 1].name = name
-    categorys[id - 1].slug = slug
+    if (name) {
+      categorys[id - 1].name = name
+    }
+    if (slug) {
+      categorys[id - 1].slug = slug
+    }
+    if (isDelete) {
+      categorys[id - 1].isDelete = isDelete
+    }
+    console.log(id);
+    console.log(categorys[id-1]);
 
     try {
       fs.writeFileSync(

@@ -44,6 +44,8 @@ router.get('/category_search',adminController.category_search)
 router.post('/category_add',adminController.category_add)
 // 分类编辑
 router.post('/category_edit',adminController.category_edit)
+// 分类删除
+router.post('/category_delete',adminController.category_delete)
 
 // 暴露
 module.exports = router
