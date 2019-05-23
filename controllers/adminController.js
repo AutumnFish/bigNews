@@ -206,16 +206,50 @@ module.exports = {
       if (state == '') return true
       return v.state == state
     })
-    // 关键字
+    // 是否被删除
     article = article.filter(v => {
       // 类型筛选
-      if (key == '') return true
-      try {
-        return v.title.indexOf(key) != -1 || v.intro.indexOf(key) != -1
-      } catch (error) {
-        return false
-      }
+      return v.isDelete == false
     })
+    // 关键字
+    article = article
+      .filter(v => {
+        // 类型筛选
+        if (key == '') return true
+        try {
+          return v.title.indexOf(key) != -1 || v.intro.indexOf(key) != -1
+        } catch (error) {
+          return false
+        }
+      })
+      .map(v => {
+        let {
+          id,
+          title,
+          intro,
+          cover,
+          type,
+          read,
+          comment,
+          date,
+          state,
+          isDelete
+        } = v
+        if(cover.indexOf("https://")==-1){
+          cover = config.serverAddress + cover
+        }
+        return {
+          id,
+          title,
+          intro,
+          cover,
+          type,
+          read,
+          comment,
+          date,
+          state
+        }
+      })
 
     res.send({
       msg: '搜索成功',
@@ -553,7 +587,7 @@ module.exports = {
       return
     }
     const isDelete = true
-    if (db.editCategory({id,isDelete})) {
+    if (db.editCategory({ id, isDelete })) {
       res.send({
         msg: '删除成功',
         code: 200
