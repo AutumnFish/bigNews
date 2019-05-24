@@ -193,13 +193,51 @@ module.exports = {
     if (isDelete) {
       categorys[id - 1].isDelete = isDelete
     }
-    console.log(id);
-    console.log(categorys[id-1]);
+    console.log(id)
+    console.log(categorys[id - 1])
 
     try {
       fs.writeFileSync(
         path.join(basePath, 'category.json'),
         JSON.stringify(categorys)
+      )
+      return true
+    } catch (error) {
+      return false
+    }
+  },
+  // 获取评论数据
+  getComments() {
+    try {
+      return JSON.parse(fs.readFileSync(path.join(basePath, 'comments.json')))
+    } catch (error) {
+      const comments = []
+      fs.writeFileSync(path.join(basePath, 'comments.json'), JSON.stringify([]))
+      return []
+    }
+  },
+  // 通过评论
+  passComments(id, isPass) {
+    let comments = this.getComments()
+    comments[id - 1].state = isPass ? '批准' : '不通过'
+    try {
+      fs.writeFileSync(
+        path.join(basePath, 'comments.json'),
+        JSON.stringify(comments)
+      )
+      return true
+    } catch (error) {
+      return false
+    }
+  },
+  // 删除评论
+  deleteComments(id) {
+    let comments = this.getComments()
+    comments[id - 1].isDelete = true
+    try {
+      fs.writeFileSync(
+        path.join(basePath, 'comments.json'),
+        JSON.stringify(comments)
       )
       return true
     } catch (error) {

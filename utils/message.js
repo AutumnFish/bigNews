@@ -1,9 +1,8 @@
-
 module.exports = {
-  invalidParameter(req,msg){
-    req.send({
-      msg:`${msg} 参数无效,请检查'`,
-      code:400
+  invalidParameter(res, parName, msg = '参数无效，请检查') {
+    res.send({
+      msg: `${parName} ${msg}'`,
+      code: 400
     })
   }
 }
