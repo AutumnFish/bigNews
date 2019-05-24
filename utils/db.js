@@ -15,7 +15,7 @@ module.exports = {
         {
           id: 1,
           title: '西兰花好好吃',
-          intro: '多次西兰花有益身心健康',
+          content: '多次西兰花有益身心健康',
           cover:
             'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2189299806,3304117673&fm=179&app=42&f=JPEG?w=121&h=140',
           type: '1',
@@ -26,7 +26,7 @@ module.exports = {
         {
           id: 2,
           title: '花菜也不错哦',
-          intro: '他是西兰花的兄弟肯定好吃啦',
+          content: '他是西兰花的兄弟肯定好吃啦',
           cover:
             'https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=2946378002,1623249294&fm=58&bpow=700&bpoh=528',
           type: '2',
@@ -49,20 +49,23 @@ module.exports = {
       )
     } catch (err) {
       const user = {
-        nick_name: '小小黑',
-        user_pic: '/static/02.jpg'
+        username: 'admin',
+        nickname: '小小黑',
+        email: 'littleBlack@itcast.cn',
+        user_pic: '/static/icon.gif',
+        password: '123456'
       }
       fs.writeFileSync(path.join('user.json'), JSON.stringify(user))
       return user
     }
   },
   // 添加文章
-  addArticle({ title, intro, cover, type, date }) {
+  addArticle({ title, content, cover, type, date }) {
     const article = this.getArticle()
     article.push({
       id: article.length,
       title,
-      intro,
+      content,
       cover,
       type,
       read: 0,
@@ -83,7 +86,7 @@ module.exports = {
     }
   },
   // 修改文章
-  editArticle({ id, title, intro, cover, type, isDelete }) {
+  editArticle({ id, title, content, cover, type, isDelete }) {
     let article = this.getArticle()
     let editOne = article.filter(v => {
       return v.id == id
@@ -94,8 +97,8 @@ module.exports = {
     if (title) {
       editOne.title = title
     }
-    if (intro) {
-      editOne.intro = intro
+    if (content) {
+      editOne.content = content
     }
     if (type) {
       editOne.type = type
@@ -239,6 +242,15 @@ module.exports = {
         path.join(basePath, 'comments.json'),
         JSON.stringify(comments)
       )
+      return true
+    } catch (error) {
+      return false
+    }
+  },
+  // 保存用户
+  editUser(user) {
+    try {
+      fs.writeFileSync(path.join(basePath, 'user.json'), JSON.stringify(user))
       return true
     } catch (error) {
       return false

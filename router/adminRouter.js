@@ -9,6 +9,7 @@ const bodyParser = require('body-parser')
 // 导入multer中间件
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/articles/' })
+const uploadUser = multer({ dest: 'uploads/' })
 
 // 注册body-parser中间件
 // parse application/x-www-form-urlencoded
@@ -74,6 +75,10 @@ router.post(
   adminController.comment_Check,
   adminController.comment_delete
 )
+// 获取用户信息userinfo_get
+router.get('/userinfo_get', adminController.userinfo_get)
+// 编辑用户信息 
+router.post('/userinfo_edit', uploadUser.single('user_pic'), adminController.userinfo_edit)
 
 // 暴露
 module.exports = router

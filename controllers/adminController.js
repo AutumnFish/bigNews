@@ -40,13 +40,13 @@ module.exports = {
   },
   // 获取用户信息
   getuser(req, res) {
-    let user = db.getUser()
-    user.user_pic = config.serverAddress + user.user_pic
+    let { nickname, user_pic } = db.getUser()
+    user_pic = config.serverAddress + user_pic
     // 获取用户信息
     res.send({
       msg: '获取成功',
       code: 200,
-      data: user
+      data: { nickname, user_pic }
     })
   },
   // 获取文章数量统计
@@ -221,7 +221,7 @@ module.exports = {
         // 类型筛选
         if (key == '') return true
         try {
-          return v.title.indexOf(key) != -1 || v.intro.indexOf(key) != -1
+          return v.title.indexOf(key) != -1 || v.content.indexOf(key) != -1
         } catch (error) {
           return false
         }
@@ -230,7 +230,7 @@ module.exports = {
         let {
           id,
           title,
-          intro,
+          content,
           cover,
           type,
           read,
@@ -245,7 +245,7 @@ module.exports = {
         return {
           id,
           title,
-          intro,
+          content,
           cover,
           type,
           read,
@@ -267,7 +267,7 @@ module.exports = {
     const title = req.body.title || ''
     const type = req.body.type || 1
     const date = req.body.date || moment().format('YYYY-MM-DD')
-    const intro = req.body.intro || ''
+    const content = req.body.content || ''
     let cover
     // 允许的图片类型
     if (!req.file) {
@@ -277,7 +277,7 @@ module.exports = {
       })
       return
     } else if (
-      fs.size > 1024 * 1024 ||
+      req.file.size > 1024 * 1024 ||
       ['image/gif', 'image/png', 'image/jpeg'].indexOf(req.file.mimetype) == -1
     ) {
       res.send({
@@ -309,7 +309,7 @@ module.exports = {
     if (
       db.addArticle({
         title,
-        intro,
+        content,
         cover,
         type,
         date
@@ -334,7 +334,7 @@ module.exports = {
     // 获取数据
     const title = req.body.title
     const type = req.body.type
-    const intro = req.body.intro
+    const content = req.body.content
     let cover
 
     // id不能为空
@@ -365,7 +365,7 @@ module.exports = {
     // 允许的图片类型
     if (req.file) {
       if (
-        fs.size > 1024 * 1024 ||
+        req.file.size > 1024 * 1024 ||
         ['image/gif', 'image/png', 'image/jpeg'].indexOf(req.file.mimetype) ==
           -1
       ) {
@@ -380,7 +380,7 @@ module.exports = {
     // 设置封面
     cover = config.serverAddress + `/static/articles/${req.file.filename}`
     // 修改文章
-    if (db.editArticle({ id, title, type, intro, cover })) {
+    if (db.editArticle({ id, title, type, content, cover })) {
       res.send({
         msg: '修改成功',
         code: 200
@@ -717,6 +717,69 @@ module.exports = {
       res.send({
         msg: '删除失败,请重试',
         code: 400
+      })
+    }
+  },
+  // 获取用户信息
+  userinfo_get(req, res) {
+    // 获取用户信息
+    let user = db.getUser()
+    res.send({
+      msg: '用户信息获取成功',
+      code: 200,
+      data: user
+    })
+  },
+  userinfo_edit(req, res) {
+    // 获取用户数据
+    let user = db.getUser()
+    console.log(req.file)
+    // 允许的图片类型
+    // 如果文件存在
+    if (req.file) {
+      // 文件大小判断
+      if (
+        req.file.size > 1024 * 1024 ||
+        ['image/gif', 'image/png', 'image/jpeg'].indexOf(req.file.mimetype) ==
+          -1
+      ) {
+        res.send({
+          msg: '文件大小或类型不对，请检查',
+          code: 400
+        })
+        fs.unlinkSync(path.join(__dirname, '../', req.file.path))
+        return
+      }
+      // 删除之前的文件
+      fs.unlinkSync(path.join(__dirname,'../uploads/',user.user_pic.split('/')[2]))
+      console.log(
+        // path.join(__dirname, '../uploads/', user.user_pic.split('/')[2])
+      )
+      // 设置文件信息
+      user.user_pic = '/static/' + req.file.filename
+    }
+
+    if (cd.cExist(req.body.username)) {
+      user.username = req.body.username
+    }
+    if (cd.cExist(req.body.nickname)) {
+      user.nickname = req.body.nickname
+    }
+    if (cd.cExist(req.body.email)) {
+      user.email = req.body.email
+    }
+    if (cd.cExist(req.body.password)) {
+      user.password = req.body.password
+    }
+    // 保存
+    if (db.editUser(user)) {
+      res.send({
+        msg: '修改成功',
+        code: 200
+      })
+    } else {
+      res.send({
+        msg: '修改失败，请重试'
       })
     }
   }
