@@ -61,4 +61,4 @@ typings/
 .next
 
 # 忽略上传的文件
-uploads/articles/*
+
