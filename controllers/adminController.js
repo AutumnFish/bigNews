@@ -724,6 +724,7 @@ module.exports = {
   userinfo_get(req, res) {
     // 获取用户信息
     let user = db.getUser()
+    user.user_pic = config.serverAddress +user.user_pic
     res.send({
       msg: '用户信息获取成功',
       code: 200,
