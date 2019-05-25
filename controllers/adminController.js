@@ -750,7 +750,11 @@ module.exports = {
           msg: '文件大小或类型不对，请检查',
           code: 400
         })
-        fs.unlinkSync(path.join(__dirname, '../', req.file.path))
+        try {
+          fs.unlinkSync(path.join(__dirname, '../', req.file.path))
+        } catch (error) {
+          
+        }
         return
       }
       // 删除之前的文件
