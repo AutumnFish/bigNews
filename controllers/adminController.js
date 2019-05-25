@@ -431,8 +431,10 @@ module.exports = {
   // 分类查询
   category_search(req, res) {
     // 获取所有并返回
-    res.send(
-      db
+    res.send({
+      msg: '分类获取完毕',
+      code: 200,
+      data: db
         .getCategory()
         .filter(v => {
           return !v.isDelete
@@ -445,7 +447,7 @@ module.exports = {
             slug
           }
         })
-    )
+    })
   },
   // 分类新增
   category_add(req, res) {
@@ -724,7 +726,7 @@ module.exports = {
   userinfo_get(req, res) {
     // 获取用户信息
     let user = db.getUser()
-    user.user_pic = config.serverAddress +user.user_pic
+    user.user_pic = config.serverAddress + user.user_pic
     res.send({
       msg: '用户信息获取成功',
       code: 200,
@@ -752,10 +754,13 @@ module.exports = {
         return
       }
       // 删除之前的文件
-      fs.unlinkSync(path.join(__dirname,'../uploads/',user.user_pic.split('/')[2]))
-      console.log(
-        // path.join(__dirname, '../uploads/', user.user_pic.split('/')[2])
+      fs.unlinkSync(
+        path.join(__dirname, '../uploads/', user.user_pic.split('/')[2])
       )
+      console
+        .log
+        // path.join(__dirname, '../uploads/', user.user_pic.split('/')[2])
+        ()
       // 设置文件信息
       user.user_pic = '/static/' + req.file.filename
     }
