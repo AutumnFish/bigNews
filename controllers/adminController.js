@@ -752,19 +752,20 @@ module.exports = {
         })
         try {
           fs.unlinkSync(path.join(__dirname, '../', req.file.path))
-        } catch (error) {
-          
-        }
+        } catch (error) {}
         return
       }
-      // 删除之前的文件
-      fs.unlinkSync(
-        path.join(__dirname, '../uploads/', user.user_pic.split('/')[2])
-      )
-      console
-        .log
-        // path.join(__dirname, '../uploads/', user.user_pic.split('/')[2])
-        ()
+      try {
+        // 删除之前的文件
+        fs.unlinkSync(
+          path.join(__dirname, '../uploads/', user.user_pic.split('/')[2])
+        )
+      } catch (error) {}
+
+      // console
+      //   .log
+      //   // path.join(__dirname, '../uploads/', user.user_pic.split('/')[2])
+      //   ()
       // 设置文件信息
       user.user_pic = '/static/' + req.file.filename
     }
