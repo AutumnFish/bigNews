@@ -648,7 +648,7 @@
 
 #### 16、删除文章类别
 
-请求地址：https://autumnfish.cn/big/admin/category_edit
+请求地址：https://autumnfish.cn/big/admin/category_delete
 
 请求方式：post
 
