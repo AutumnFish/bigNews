@@ -74,7 +74,6 @@ module.exports = {
       state: '草稿',
       isDelete: false
     })
-    // console.log(article[article.length-1]);
     try {
       fs.writeFileSync(
         path.join(basePath, 'article.json'),
@@ -115,7 +114,7 @@ module.exports = {
     if (isDelete) {
       editOne.isDelete = isDelete
     }
-    // console.log(editOne);
+    // log(editOne);
     // 保存
     try {
       fs.writeFileSync(
@@ -142,9 +141,12 @@ module.exports = {
   // 获取评论
   getCategory() {
     try {
-      return JSON.parse(
+      let category = JSON.parse(
         fs.readFileSync(path.join(basePath, 'category.json'), 'utf-8')
       )
+      return category.filter(v=>{
+        return !v.isDelete 
+      })
     } catch (error) {
       let data = [
         {
@@ -196,8 +198,6 @@ module.exports = {
     if (isDelete) {
       categorys[id - 1].isDelete = isDelete
     }
-    console.log(id)
-    console.log(categorys[id - 1])
 
     try {
       fs.writeFileSync(

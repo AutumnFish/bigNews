@@ -188,8 +188,8 @@ module.exports = {
     const key = req.query.key || ''
     const type = req.query.type || ''
     const state = req.query.state || ''
-    const page = req.query.page || 1
-    const perpage = req.query.perpage || 6
+    const page = parseInt(req.query.page || 1)
+    const perpage = parseInt(req.query.perpage || 6)
 
     // 数据类型判断
     if (isNaN(page) || isNaN(perpage)) {
@@ -215,9 +215,23 @@ module.exports = {
       // 类型筛选
       return v.isDelete == false
     })
+    // 获取分类
+    let cateData = {}
+    db.getCategory().forEach(v => {
+      if (v.isDelete == false) {
+        cateData[v.id] = v.name
+      }
+    })
     // 关键字
     article = article
+      .reverse()
       .filter(v => {
+        if (
+          cateData[v.type] == undefined ||
+          cateData[v.type].isDelete == true
+        ) {
+          return false
+        }
         // 类型筛选
         if (key == '') return true
         try {
@@ -237,11 +251,13 @@ module.exports = {
           comment,
           date,
           state,
+          author,
           isDelete
         } = v
         if (cover.indexOf('https://') == -1) {
           cover = config.serverAddress + cover
         }
+        type = cateData[type]
         return {
           id,
           title,
@@ -251,14 +267,30 @@ module.exports = {
           read,
           comment,
           date,
-          state
+          state,
+          author
         }
       })
-
+    // 实现分页
+    let startIndex = (page - 1) * perpage
+    let endIndex = startIndex + perpage
+    if (endIndex > article.length) {
+      endIndex = article.length
+    }
+    // 总页数
+    let totalPage = Math.ceil(article.length / perpage) || 1
+    // 返回的数据
+    var backData = []
+    console.log(startIndex)
+    console.log(endIndex)
+    for (let i = startIndex; i < endIndex; i++) {
+      backData.push(article[i])
+    }
     res.send({
       msg: '搜索成功',
       code: 200,
-      data: article
+      totalPage,
+      data: backData
     })
   },
   // 文章发布
@@ -470,7 +502,6 @@ module.exports = {
     const name = req.body.name.trim()
     const slug = req.body.slug.trim()
 
-    console.log(db.getCategory())
     // 判断是否存在
     const filterCate = db.getCategory().filter(v => {
       return v.name == name || v.slug == slug
@@ -638,7 +669,6 @@ module.exports = {
   comment_Check(req, res, next) {
     // 获取id
     let id = req.body.id
-    // console.log(id)
 
     if (!cd.cExist(id)) {
       message.invalidParameter(res, 'id')
@@ -714,7 +744,7 @@ module.exports = {
   userinfo_edit(req, res) {
     // 获取用户数据
     let user = db.getUser()
-    console.log(req.file)
+    log(req.file)
     // 允许的图片类型
     // 如果文件存在
     if (req.file) {
