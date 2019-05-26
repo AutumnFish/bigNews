@@ -534,28 +534,6 @@ module.exports = {
       })
       return
     }
-    if (
-      db.getCategory().filter(v => {
-        return v.name == name
-      }).length != 0
-    ) {
-      res.send({
-        msg: 'name已存在请修改',
-        code: 400
-      })
-      return
-    }
-    if (
-      db.getCategory().filter(v => {
-        return v.slug == slug
-      }).length != 0
-    ) {
-      res.send({
-        msg: 'slug已存在请修改',
-        code: 400
-      })
-      return
-    }
 
     // 调用修改方法
     if (db.editCategory({ id, name, slug })) {
