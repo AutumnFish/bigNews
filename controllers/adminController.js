@@ -745,7 +745,6 @@ module.exports = {
   userinfo_edit(req, res) {
     // 获取用户数据
     let user = db.getUser()
-    log(req.file)
     // 允许的图片类型
     // 如果文件存在
     if (req.file) {
