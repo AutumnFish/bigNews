@@ -522,15 +522,16 @@
 
 请求方式：post
 
-请求参数：
+请求参数：formData
 
 | 名称    | 类型   | 说明         |
 | ------- | ------ | ------------ |
 | title   | string | 文章标题     |
 | cover   | file   | 文章封面图片 |
-| pid     | number | 文章类型id   |
+| type     | number | 文章类型id   |
 | date    | string | 日期         |
 | content | string | 文章内容     |
+| state | string | 文章状态(草稿或已发布) |
 
 返回数据：
 
@@ -553,7 +554,7 @@
 | id      | number | 文章id       |
 | title   | string | 文章标题     |
 | cover   | file   | 文章封面图片 |
-| pid     | number | 文章类型id   |
+| type    | number | 文章类型id   |
 | date    | string | 日期         |
 | content | string | 文章内容     |
 

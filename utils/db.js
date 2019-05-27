@@ -71,6 +71,7 @@ module.exports = {
       read: 0,
       comment: 0,
       date,
+      author:'管理员',
       state: '草稿',
       isDelete: false
     })

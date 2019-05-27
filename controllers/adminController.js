@@ -344,7 +344,8 @@ module.exports = {
         content,
         cover,
         type,
-        date
+        date,
+        author:'管理员'
       })
     ) {
       res.send({
