@@ -1,6 +1,6 @@
 ## 基地址
 
-接口的基础地址为 https://autumnfish.cn/big
+接口的基础地址为 http://localhost:8000/
 
 ## 状态说明
 
@@ -245,7 +245,7 @@
 
 #### 1、用户登录
 
-请求地址：https://autumnfish.cn/big/admin/login
+请求地址：http://localhost:8000/admin/login
 
 请求方式：post
 
@@ -266,7 +266,7 @@
 
 #### 2、退出登录
 
-请求地址：https://autumnfish.cn/big/admin/logout
+请求地址：http://localhost:8000/admin/logout
 
 请求方式：post
 
@@ -278,7 +278,7 @@
 
 #### 3、获取用户信息
 
-请求地址：https://autumnfish.cn/big/admin/getuser
+请求地址：http://localhost:8000/admin/getuser
 
 请求方式：get
 
@@ -295,7 +295,7 @@
 
 #### 4、文章数量统计
 
-请求地址：https://autumnfish.cn/big/admin/article_count
+请求地址：http://localhost:8000/admin/article_count
 
 请求方式：get
 
@@ -312,7 +312,7 @@
 
 #### 5、评论数量统计
 
-请求地址：https://autumnfish.cn/big/admin/comment_count
+请求地址：http://localhost:8000/admin/comment_count
 
 请求方式：get
 
@@ -329,7 +329,7 @@
 
 #### 6、月新增文章数
 
-请求地址：https://autumnfish.cn/big/admin/month_article_count
+请求地址：http://localhost:8000/admin/month_article_count
 
 请求方式：get
 
@@ -374,7 +374,7 @@
 
 #### 7、各类型文章数量统计
 
-请求地址：https://autumnfish.cn/big/admin/article_category_count
+请求地址：http://localhost:8000/admin/article_category_count
 
 请求方式：get
 
@@ -391,7 +391,7 @@
 
 #### 8、月文章访问量
 
-请求地址：https://autumnfish.cn/big/admin/article_category_visit
+请求地址：http://localhost:8000/admin/article_category_visit
 
 请求方式：post
 
@@ -492,7 +492,7 @@
 
 #### 9、文章搜索
 
-请求地址：https://autumnfish.cn/big/admin/search
+请求地址：http://localhost:8000/admin/search
 
 请求方式：get
 
@@ -518,7 +518,7 @@
 
 #### 10、发布文章
 
-请求地址：https://autumnfish.cn/big/admin/article_publish
+请求地址：http://localhost:8000/admin/article_publish
 
 请求方式：post
 
@@ -543,7 +543,7 @@
 
 #### 11、文章编辑
 
-请求地址：https://autumnfish.cn/big/admin/article_edit
+请求地址：http://localhost:8000/admin/article_edit
 
 请求方式：post
 
@@ -568,7 +568,7 @@
 
 #### 12、删除文章
 
-请求地址：https://autumnfish.cn/big/admin/article_delete
+请求地址：http://localhost:8000/admin/article_delete
 
 请求方式：get
 
@@ -588,7 +588,7 @@
 
 #### 13、文章类别搜索
 
-请求地址：https://autumnfish.cn/big/admin/category_search
+请求地址：http://localhost:8000/admin/category_search
 
 请求方式：get
 
@@ -606,7 +606,7 @@
 
 #### 14、新增文章类别
 
-请求地址：https://autumnfish.cn/big/admin/category_add
+请求地址：http://localhost:8000/admin/category_add
 
 请求方式：post
 
@@ -627,7 +627,7 @@
 
 #### 15、编辑文章类别
 
-请求地址：https://autumnfish.cn/big/admin/category_edit
+请求地址：http://localhost:8000/admin/category_edit
 
 请求方式：post
 
@@ -649,7 +649,7 @@
 
 #### 16、删除文章类别
 
-请求地址：https://autumnfish.cn/big/admin/category_delete
+请求地址：http://localhost:8000/admin/category_delete
 
 请求方式：post
 
@@ -669,7 +669,7 @@
 
 #### 17、文章评论搜索
 
-请求地址：https://autumnfish.cn/big/admin/comment_search
+请求地址：http://localhost:8000/admin/comment_search
 
 请求方式：get
 
@@ -696,7 +696,7 @@
 
 #### 18、评论审核通过
 
-请求地址：https://autumnfish.cn/big/admin/comment_pass
+请求地址：http://localhost:8000/admin/comment_pass
 
 请求方式：post
 
@@ -716,7 +716,7 @@
 
 #### 19、评论审核不通过
 
-请求地址：https://autumnfish.cn/big/admin/comment_reject
+请求地址：http://localhost:8000/admin/comment_reject
 
 请求方式：post
 
@@ -736,7 +736,7 @@
 
 #### 20、删除评论
 
-请求地址：https://autumnfish.cn/big/admin/comment_delete
+请求地址：http://localhost:8000/admin/comment_delete
 
 请求方式：post
 
@@ -756,7 +756,7 @@
 
 #### 21、获取用户信息
 
-请求地址：https://autumnfish.cn/big/admin/userinfo_get
+请求地址：http://localhost:8000/admin/userinfo_get
 
 请求方式：get
 
@@ -776,7 +776,7 @@
 
 #### 22、编辑用户信息
 
-请求地址：https://autumnfish.cn/big/admin/userinfo_edit
+请求地址：http://localhost:8000/admin/userinfo_edit
 
 请求方式：post
 
