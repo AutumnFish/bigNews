@@ -145,9 +145,10 @@ module.exports = {
       let category = JSON.parse(
         fs.readFileSync(path.join(basePath, 'category.json'), 'utf-8')
       )
-      return category.filter(v=>{
-        return !v.isDelete 
-      })
+      return category
+      // return category.filter(v=>{
+      //   return !v.isDelete 
+      // })
     } catch (error) {
       let data = [
         {
