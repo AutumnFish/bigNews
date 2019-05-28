@@ -1,8 +1,1 @@
-[
-  { "id": 1, "name": "科技", "slug": "keji", "isDelete": false },
-  { "id": 2, "name": "天上蹲", "slug": "fly", "isDelete": false },
-  { "id": 3, "name": "不科学啊1", "slug": "kexuen", "isDelete": true },
-  { "id": 4, "name": "家里蹲", "slug": "athome", "isDelete": false },
-  { "id": 5, "name": "门口蹲", "slug": "outhome", "isDelete": false },
-  { "id": 6, "name": "1", "slug": "12", "isDelete": true }
-]
+[{"id":1,"name":"蓝蓝的天空","slug":"changelife","isDelete":false},{"id":2,"name":"飘着几个人","slug":"fly","isDelete":false},{"id":3,"name":"不科学啊1","slug":"kexuen","isDelete":true},{"id":4,"name":"→_→ longwei←_←","slug":"comfortablehome","isDelete":false},{"id":5,"name":"→_→ cl←_←","slug":"outhome","isDelete":false},{"id":6,"name":"1","slug":"12","isDelete":true},{"id":7,"name":"本地的就是爽","slug":"niubi","isDelete":true},{"id":8,"name":"→_→ ！←_←","slug":"eyekillyou","isDelete":false},{"id":9,"name":"你是一个好人","slug":"goodman","isDelete":true},{"id":10,"name":"还是做朋友吧","slug":"friend","isDelete":true},{"id":11,"name":"你不是人","slug":"noman","isDelete":true},{"id":12,"name":"禽兽不如","slug":"noanimal","isDelete":true}]

@@ -505,6 +505,7 @@
 |  state  | string | 文章状态，草稿或者已发布                     |
 |  page   | number | 当前页，为空返回第1页                        |
 | perpage | number | 每页显示条数，为空默认每页6条                |
+|   id    | number | 文章id，根据id查询时，其余参数可以不选择     |
 
 返回数据：
 

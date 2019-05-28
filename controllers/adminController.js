@@ -190,6 +190,7 @@ module.exports = {
     const state = req.query.state || ''
     const page = parseInt(req.query.page || 1)
     const perpage = parseInt(req.query.perpage || 6)
+    const id = req.query.id
 
     // 数据类型判断
     if (isNaN(page) || isNaN(perpage)) {
@@ -254,7 +255,10 @@ module.exports = {
           author,
           isDelete
         } = v
-        if (cover.indexOf('https://') == -1) {
+        if (
+          cover.indexOf('http') == -1 &&
+          cover.indexOf(config.serverAddress) == -1
+        ) {
           cover = config.serverAddress + cover
         }
         type = cateData[type]
@@ -271,6 +275,28 @@ module.exports = {
           author
         }
       })
+    if (id) {
+      // 如果只是id
+      const editOne = article.filter(v => {
+        return v.id == id
+      })[0]
+
+      // 设置type 为id
+      for (const key in cateData) {
+        if (cateData[key] == editOne.type) {
+          editOne.type = key
+        }
+      }
+      if (editOne) {
+        res.send({
+          msg: '获取成功',
+          code: 200,
+          data: editOne
+        })
+        return
+      }
+    }
+
     // 实现分页
     let startIndex = (page - 1) * perpage
     let endIndex = startIndex + perpage
@@ -345,7 +371,7 @@ module.exports = {
         cover,
         type,
         date,
-        author:'管理员'
+        author: '管理员'
       })
     ) {
       res.send({
@@ -393,6 +419,7 @@ module.exports = {
         code: 400
       })
       return
+    } else {
     }
 
     // 允许的图片类型
