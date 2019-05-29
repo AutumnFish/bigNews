@@ -335,7 +335,7 @@ module.exports = {
       })
       return
     } else if (
-      req.file.size > 1024 * 1024 ||
+      req.file.size > 1024 * 1024 * 5 ||
       ['image/gif', 'image/png', 'image/jpeg'].indexOf(req.file.mimetype) == -1
     ) {
       res.send({
