@@ -29,7 +29,7 @@ module.exports = {
     }
   },
   // 获取
-  async search(req,res){
+  async list(req,res){
     try {
       let data = await Category.findAll()
       res.send({
