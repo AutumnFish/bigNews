@@ -27,7 +27,7 @@ const errorMsg = (req, res, next) => {
 router.post(
   "/add",
   [
-    check("name")
+    check("slug")
       .not()
       .isEmpty(),
     check("slug")
@@ -46,4 +46,10 @@ router.get('/search',[
   .isEmpty()
 ],errorMsg,categoryController.search)
 
+// 编辑文章类别
+router.post('/edit',[
+  check('id').not().isEmpty(),
+  check('name').not().isEmpty(),
+  check('slug').not().isEmpty(),
+],errorMsg,categoryController.edit)
 module.exports = router

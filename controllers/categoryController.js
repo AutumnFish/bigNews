@@ -1,5 +1,12 @@
 const { Category } = require("../db")
 
+const serverError = res => {
+  res.status(500).send({
+    code: 500,
+    msg: "服务器内部错误"
+  })
+}
+
 module.exports = {
   // 新增
   async add(req, res) {
@@ -38,10 +45,7 @@ module.exports = {
         data
       })
     } catch (error) {
-      res.status(500).send({
-        code: 500,
-        msg: "服务器内部错误"
-      })
+      serverError(res)
     }
   },
   // 根据id搜索文章分类
@@ -49,21 +53,44 @@ module.exports = {
     const { id } = req.query
     try {
       let data = await Category.findAll({
-        where:{
+        where: {
           id
         }
       })
       res.send({
-        code:200,
-        msg:'获取成功',
+        code: 200,
+        msg: "获取成功",
         data
       })
-     
     } catch (error) {
-      res.status(500).send({
-        code:500,
-        msg:'服务器内部错误'
-      })
+      serverError(res)
+    }
+  },
+  // 编辑文章
+  async edit(req, res) {
+    const { id, name, slug } = req.body
+    try {
+      let result = await Category.update(
+        { name, slug },
+        {
+          where: {
+            id
+          }
+        }
+      )
+      if (result == 1) {
+        res.send({
+          code: 200,
+          msg:'修改成功'
+        })
+      }else{
+        res.send({
+          code:400,
+          msg:'修改失败，请检查slug和name参数'
+        })
+      }
+    } catch (error) {
+      serverError(res)
     }
   }
 }
