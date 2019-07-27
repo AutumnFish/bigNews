@@ -52,4 +52,12 @@ router.post('/edit',[
   check('name').not().isEmpty(),
   check('slug').not().isEmpty(),
 ],errorMsg,categoryController.edit)
+
+
+// 删除文章类别
+router.post('/delete',[
+  check('id').not().isEmpty()
+],errorMsg,categoryController._delete)
+
+
 module.exports = router

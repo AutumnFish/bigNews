@@ -66,7 +66,7 @@ module.exports = {
       serverError(res)
     }
   },
-  // 编辑文章
+  // 编辑文章类别
   async edit(req, res) {
     const { id, name, slug } = req.body
     try {
@@ -81,12 +81,38 @@ module.exports = {
       if (result == 1) {
         res.send({
           code: 200,
-          msg:'修改成功'
+          msg: "修改成功"
+        })
+      } else {
+        res.send({
+          code: 400,
+          msg: "修改失败，请检查slug和name参数"
+        })
+      }
+    } catch (error) {
+      serverError(res)
+    }
+  },
+  // 删除文章类别
+  async _delete(req, res) {
+    const { id } = req.body
+    // console.log(id)
+    try {
+      const result = await Category.destroy({
+        where: { id }
+      })
+      // res.send(result)
+      console.log(result)
+      // res.send('/delsuc')
+      if(result==1){
+        res.send({
+          code:204,
+          msg:'删除成功'
         })
       }else{
         res.send({
           code:400,
-          msg:'修改失败，请检查slug和name参数'
+          msg:'，删除失败,请检查id'
         })
       }
     } catch (error) {

@@ -648,21 +648,43 @@
 | :--: | :----: | --------------------------------- |
 | msg  | string | 文字信息  ‘增加成功’   ‘增加失败’ |
 
+#### 15、根据id查询指定文章类别
+
+请求地址：/admin/category/search
+
+请求方式：get
+
+请求参数：id
+
+| 名称 | 类型   | 说明       |
+| ---- | ------ | ---------- |
+| id   | number | 文章类别id |
+
+返回数据：
+
+| 名称 |  类型  | 说明     |
+| :--: | :----: | -------- |
+|  id  | number | 类别     |
+| name | string | 类别名称 |
+| slug | string | 别名     |
 
 
-#### 15、编辑文章类别
 
-请求地址：/admin/category_edit
+#### 
+
+#### 16、编辑文章类别
+
+请求地址：/admin/category/edit
 
 请求方式：post
 
 请求参数：
 
-| 名称  | 类型   | 说明      |
-| ----- | ------ | --------- |
-| token | string | 用户token |
-| name  | string | 类别名称  |
-| slug  | string | 别名      |
+| 名称 | 类型   | 说明     |
+| ---- | ------ | -------- |
+| id   | number | 类别id   |
+| name | string | 类别名称 |
+| slug | string | 别名     |
 
 返回数据：
 
@@ -672,18 +694,17 @@
 
 
 
-#### 16、删除文章类别
+#### 17、删除文章类别
 
-请求地址：/admin/category_delete
+请求地址：/admin/category/delete
 
 请求方式：post
 
 请求参数：
 
-| 名称  | 类型   | 说明      |
-| ----- | ------ | --------- |
-| token | string | 用户token |
-| id    | number | 类别id    |
+| 名称 | 类型   | 说明   |
+| ---- | ------ | ------ |
+| id   | number | 文章id |
 
 返回数据：
 
