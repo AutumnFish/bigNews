@@ -1,9 +1,14 @@
-const express = require('express')
-const cors= require('cors')
-const bodyParser = require('body-parser')
-const morgan = require('morgan')
+const express = require("express")
+const cors = require("cors")
+const bodyParser = require("body-parser")
+const morgan = require("morgan")
+// 设置到全局对象上 
+global.reqlib = require('app-root-path').require;
+ 
 
-const adminRouter= require('./router/adminRouter')
+const adminRouter = require("./router/adminRouter")
+// 数据库
+const db = require("./db")
 
 const app = express()
 
@@ -14,13 +19,13 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // 中间件 - 日志 最小模式输出
-app.use(morgan('tiny'))
+app.use(morgan("tiny"))
 
 // 中间件 - 路由 - admin
-app.use('/admin',adminRouter)
-
-
-
-app.listen(8080,()=>{
-    console.log('开启成功: http://localhost:8080');
+app.use("/admin", adminRouter)
+ 
+db.sequelize.sync({ force: true }).then(() => {
+  app.listen(8080, () => {
+    console.log("开启成功: http://localhost:8080")
+  })
 })
