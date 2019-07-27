@@ -38,4 +38,7 @@ router.post(
   categoryController.add
 )
 
+// 获取文章分类
+router.get('/search',categoryController.search)
+
 module.exports = router

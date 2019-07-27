@@ -27,5 +27,22 @@ module.exports = {
       //   msg:''
       // })
     }
+  },
+  // 获取
+  async search(req,res){
+    try {
+      let data = await Category.findAll()
+      res.send({
+        code:200,
+        msg:'获取成功',
+        data
+      })
+      
+    } catch (error) {
+      res.status(500).send({
+        code:500,
+        msg:'服务器内部错误'
+      })
+    }
   }
 }

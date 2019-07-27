@@ -24,7 +24,7 @@ app.use(morgan("tiny"))
 // 中间件 - 路由 - admin
 app.use("/admin", adminRouter)
  
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync({ force: false }).then(() => {
   app.listen(8080, () => {
     console.log("开启成功: http://localhost:8080")
   })
