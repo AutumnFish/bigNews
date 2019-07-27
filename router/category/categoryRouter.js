@@ -40,5 +40,10 @@ router.post(
 
 // 获取文章分类列表
 router.get('/list',categoryController.list)
+// 根据id搜索文章分类
+router.get('/search',[
+  check('id').not()
+  .isEmpty()
+],errorMsg,categoryController.search)
 
 module.exports = router
