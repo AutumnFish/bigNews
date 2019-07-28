@@ -620,16 +620,15 @@
 
 #### 12、删除文章
 
-请求地址：/admin/article_delete
+请求地址：/admin/article/delete
 
 请求方式：get
 
 请求参数：
 
-| 名称  | 类型   | 说明      |
-| ----- | ------ | --------- |
-| token | string | 用户token |
-| id    | number | 文章id    |
+| 名称 | 类型   | 说明   |
+| ---- | ------ | ------ |
+| id   | number | 文章id |
 
 返回数据：
 

@@ -38,7 +38,8 @@ module.exports = {
         pid,
         date,
         content,
-        cover
+        cover,
+        isDelete:0
       })
       // 返回提示消息
       res.send({
@@ -55,7 +56,8 @@ module.exports = {
     try {
       const findRes = await Article.findAll({
         where: {
-          id
+          id,
+          isDelete:0
         }
       })
       if (findRes.length == 0) {
@@ -84,7 +86,8 @@ module.exports = {
       // 查询文章id
       const articleRes = await Article.findAll({
         where: {
-          id
+          id,
+          isDelete:0
         }
       })
       // 检验文章id是否正确
@@ -159,6 +162,42 @@ module.exports = {
       // 获取最新的值
     } catch (error) {
       console.log(error)
+      serverError(res)
+    }
+  },
+  // 删除文章
+  async _delete(req,res){
+    // 获取id
+    const {id} = req.query
+    try {
+      const articleRes = await Article.findAll({
+        where:{
+          id,
+          isDelete:0
+        }
+      })
+      if(articleRes.length==0){
+        return res.send({
+           msg:'id有误,请检查',
+           code:400
+        })
+      }
+      // 修改数据
+      const result = await Article.update({
+        isDelete:1,
+      },{
+        where:{
+          id
+        }
+      })
+      // res.send(result)
+      if(result[0]==1){
+        res.send({
+          code:204,
+          msg:'文章删除成功'
+        })
+      }
+    } catch (error) {
       serverError(res)
     }
   }
