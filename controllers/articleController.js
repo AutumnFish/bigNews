@@ -1,4 +1,4 @@
-const { Category, Article } = require("../db")
+const { Category, Article ,Sequelize} = require("../db")
 const { baseUrl } = reqlib("/config")
 const fs = require("fs")
 const path = require("path")
@@ -13,12 +13,12 @@ module.exports = {
   // 文章发布
   async publish(req, res) {
     // 获取分类id
-    const { pid: id, pid } = req.body
+    const { categoryId } = req.body
     try {
       // 判断文章分类id是否存在
       const findResult = await Category.findAll({
         where: {
-          id
+          id:categoryId
         }
       })
       if (findResult.length == 0) {
@@ -35,11 +35,14 @@ module.exports = {
       // 创建新文章
       const addResult = await Article.create({
         title,
-        pid,
+        categoryId,
         date,
         content,
         cover,
-        isDelete:0
+        isDelete:0,
+        state:'草稿',
+        author:'管理员',
+        read:0
       })
       // 返回提示消息
       res.send({
@@ -53,28 +56,37 @@ module.exports = {
   // 根据id获取文章
   async search(req, res) {
     const { id } = req.query
+
     try {
       const findRes = await Article.findAll({
         where: {
           id,
           isDelete:0
-        }
+        },
+        include:[{
+          model:Category,
+          where:{categoryId:Sequelize.col('article.id')}
+        }]
       })
       if (findRes.length == 0) {
         return res.send({
-          msg: "id有问题,请检查",
+          msg: "数据有问题,请检查",
           code: 400
         })
       }
       // 返回获取到的数据
-      const [data] = findRes
-      data.cover = `${baseUrl}/${data.cover}`
+      let [data] = findRes
+      console.log(data.cover)
+      if(data.cover.indexOf('htps://')==-1){
+        data.cover = `${baseUrl}/${data.cover}`
+      }
       res.send({
         code: 200,
         msg: "获取成功",
         data
       })
     } catch (error) {
+      console.log(error);
       serverError(res)
     }
   },
@@ -98,11 +110,11 @@ module.exports = {
         })
       }
       // 获取分类id
-      const { pid } = req.body
+      const { categoryId } = req.body
       // 判断文章分类id是否存在
       const categoryResult = await Category.findAll({
         where: {
-          id: pid
+          id: categoryId
         }
       })
       if (categoryResult.length == 0) {
@@ -122,7 +134,7 @@ module.exports = {
             title,
             date,
             content,
-            pid
+            categoryId
           },
           {
             where: {
@@ -142,7 +154,7 @@ module.exports = {
             title,
             date,
             content,
-            pid,
+            categoryId,
             cover
           },
           {

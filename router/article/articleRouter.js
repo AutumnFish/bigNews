@@ -27,7 +27,6 @@ const typeCheck = (req, res, next) => {
 
 // 文件是否上传判断
 const fileCheck = (req, res, next) => {
-  console.log(req.file)
   if (!req.file) {
     // 没有文件
     return res.status(400).send({
@@ -46,7 +45,7 @@ router.post(
     check("title")
       .not()
       .isEmpty(),
-    check("pid")
+    check("categoryId")
       .not()
       .isEmpty(),
     check("date")
@@ -81,7 +80,7 @@ router.post("/edit", typeCheck,[
   check("title")
     .not()
     .isEmpty(),
-  check("pid")
+  check("categoryId")
     .not()
     .isEmpty(),
   check("date")

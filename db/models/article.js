@@ -8,10 +8,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    pid: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
     date: {
       type: DataTypes.STRING,
       allowNull: false
@@ -23,10 +19,21 @@ module.exports = (sequelize, DataTypes) => {
     isDelete: {
       type: DataTypes.BOOLEAN,
       allowNull: false
+    },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    author: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    read: {
+      type: DataTypes.INTEGER
     }
   });
-
-  Article.associate = function(models) {
+ 
+  Article.associate = function(model) {
     // associations can be defined here
   };
 

@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // 中间件 - 日志 最小模式输出
 app.use(morgan("tiny"))
 
-// 中间件 - 路由 - admin
+// 中间件 - 路由 - admin 
 app.use("/admin", adminRouter)
 // 中间件 - 路由 - index
 app.use("/index", indexRouter)

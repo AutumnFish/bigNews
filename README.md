@@ -526,7 +526,7 @@
 | :-----: | :----: | -------------------------------------------- |
 |   key   | string | 搜索关键词，可以为空，为空返回某类型所有文章 |
 |  type   | string | 文章类型，可以为空，为空返回所有类型文章     |
-|  state  | string | 文章状态，草稿或者已发布                     |
+|  state  | string | 文章状态，草稿 或 已发布                     |
 |  page   | number | 当前页，为空返回第1页                        |
 | perpage | number | 每页显示条数，为空默认每页6条                |
 
@@ -548,13 +548,13 @@
 
 请求参数：
 
-| 名称    | 类型   | 说明         |
-| ------- | ------ | ------------ |
-| title   | string | 文章标题     |
-| cover   | file   | 文章封面图片 |
-| pid     | number | 文章类型id   |
-| date    | string | 日期         |
-| content | string | 文章内容     |
+| 名称       | 类型   | 说明         |
+| ---------- | ------ | ------------ |
+| title      | string | 文章标题     |
+| cover      | file   | 文章封面图片 |
+| categoryId | number | 文章类型id   |
+| date       | string | 日期         |
+| content    | string | 文章内容     |
 
 返回数据：
 
@@ -580,14 +580,14 @@
 
 
 
-| 名称    | 类型   | 说明         |
-| ------- | ------ | ------------ |
-| id      | number | 文章id       |
-| title   | string | 文章标题     |
-| cover   | file   | 文章封面图片 |
-| pid     | number | 文章类型id   |
-| date    | string | 日期         |
-| content | string | 文章内容     |
+| 名称       | 类型   | 说明         |
+| ---------- | ------ | ------------ |
+| id         | number | 文章id       |
+| title      | string | 文章标题     |
+| cover      | file   | 文章封面图片 |
+| categoryId | number | 文章类型id   |
+| date       | string | 日期         |
+| content    | string | 文章内容     |
 
 
 
@@ -599,14 +599,14 @@
 
 请求参数：
 
-| 名称    | 类型   | 说明                   |
-| ------- | ------ | ---------------------- |
-| id      | number | 文章id                 |
-| title   | string | 文章标题               |
-| cover   | file   | 文章封面图片(可以为空) |
-| pid     | number | 文章类型id             |
-| date    | string | 日期                   |
-| content | string | 文章内容               |
+| 名称       | 类型   | 说明                   |
+| ---------- | ------ | ---------------------- |
+| id         | number | 文章id                 |
+| title      | string | 文章标题               |
+| cover      | file   | 文章封面图片(可以为空) |
+| categoryId | number | 文章类型id             |
+| date       | string | 日期                   |
+| content    | string | 文章内容               |
 
 返回数据：
 
