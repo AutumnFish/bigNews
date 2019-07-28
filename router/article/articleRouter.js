@@ -62,8 +62,34 @@ router.post(
 )
 
 // 注册路由 - 根据id获取文章
-router.get('/search',[
-  check('id').not().isEmpty()
-],errorMsg,articleController.search)
+router.get(
+  "/search",
+  [
+    check("id")
+      .not()
+      .isEmpty()
+  ],
+  errorMsg,
+  articleController.search
+)
+
+// 注册路由 - 编辑文章
+router.post("/edit", typeCheck,[
+  check("id")
+  .not()
+  .isEmpty(),
+  check("title")
+    .not()
+    .isEmpty(),
+  check("pid")
+    .not()
+    .isEmpty(),
+  check("date")
+    .not()
+    .isEmpty(),
+  check("content")
+    .not()
+    .isEmpty()
+],errorMsg,articleController.edit)
 
 module.exports = router

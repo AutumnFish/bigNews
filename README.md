@@ -599,14 +599,14 @@
 
 请求参数：
 
-| 名称    | 类型   | 说明         |
-| ------- | ------ | ------------ |
-| id      | number | 文章id       |
-| title   | string | 文章标题     |
-| cover   | file   | 文章封面图片 |
-| pid     | number | 文章类型id   |
-| date    | string | 日期         |
-| content | string | 文章内容     |
+| 名称    | 类型   | 说明                   |
+| ------- | ------ | ---------------------- |
+| id      | number | 文章id                 |
+| title   | string | 文章标题               |
+| cover   | file   | 文章封面图片(可以为空) |
+| pid     | number | 文章类型id             |
+| date    | string | 日期                   |
+| content | string | 文章内容               |
 
 返回数据：
 
