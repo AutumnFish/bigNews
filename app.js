@@ -5,8 +5,9 @@ const morgan = require("morgan")
 // 设置到全局对象上 
 global.reqlib = require('app-root-path').require;
  
-
+// 路由
 const adminRouter = require("./router/adminRouter")
+const indexRouter = require("./router/indexRouter")
 // 数据库
 const db = require("./db")
 
@@ -23,6 +24,8 @@ app.use(morgan("tiny"))
 
 // 中间件 - 路由 - admin
 app.use("/admin", adminRouter)
+// 中间件 - 路由 - index
+app.use("/index", indexRouter)
  
 db.sequelize.sync({ force: false }).then(() => {
   app.listen(8080, () => {

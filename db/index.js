@@ -1,6 +1,7 @@
 
 const Sequelize = require('sequelize');
 const CategoryModel = require('./models/category.js');
+const CommentModel = require('./models/comment.js');
 const {database,username,password,host}= require('../config')
 
 const sequelize = new Sequelize(database, username, password, {
@@ -14,10 +15,12 @@ const sequelize = new Sequelize(database, username, password, {
 });
 
 const Category = CategoryModel(sequelize, Sequelize);
+const Comment = CommentModel(sequelize, Sequelize);
 
 
 module.exports = {
   sequelize,
   Sequelize,
-  Category
+  Category,
+  Comment
 }

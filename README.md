@@ -198,7 +198,7 @@
 
 #### 9、发表评论
 
-请求地址：/post_comment
+请求地址：/index/post_comment
 
 请求方式：post
 
@@ -208,6 +208,7 @@
 | --------- | ------ | -------- |
 | user_name | string | 用户名称 |
 | content   | string | 评论内容 |
+| aid       | number | 文章id   |
 
 返回数据：‘发表成功’   ‘发表失败’
 
@@ -541,7 +542,7 @@
 
 #### 10、发布文章
 
-请求地址：/admin/article_publish
+请求地址：/admin/article/publish
 
 请求方式：post
 
@@ -724,7 +725,6 @@
 
 |  名称   |  类型  | 说明                          |
 | :-----: | :----: | ----------------------------- |
-|  token  | string | 用户token                     |
 |  page   | number | 当前页，为空返回第1页         |
 | perpage | number | 每页显示条数，为空默认每页6条 |
 
