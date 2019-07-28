@@ -61,4 +61,9 @@ router.post(
   articleController.publish
 )
 
+// 注册路由 - 根据id获取文章
+router.get('/search',[
+  check('id').not().isEmpty()
+],errorMsg,articleController.search)
+
 module.exports = router

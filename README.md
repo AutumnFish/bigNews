@@ -550,7 +550,6 @@
 
 | 名称    | 类型   | 说明         |
 | ------- | ------ | ------------ |
-| token   | string | 用户token    |
 | title   | string | 文章标题     |
 | cover   | file   | 文章封面图片 |
 | pid     | number | 文章类型id   |
@@ -565,9 +564,36 @@
 
 
 
+#### 11、根据id获取文章信息
+
+请求地址：/admin/article/search
+
+请求方式：get
+
+请求参数：
+
+| 名称 | 类型   | 说明   |
+| ---- | ------ | ------ |
+| id   | number | 文章id |
+
+返回数据：
+
+
+
+| 名称    | 类型   | 说明         |
+| ------- | ------ | ------------ |
+| id      | number | 文章id       |
+| title   | string | 文章标题     |
+| cover   | file   | 文章封面图片 |
+| pid     | number | 文章类型id   |
+| date    | string | 日期         |
+| content | string | 文章内容     |
+
+
+
 #### 11、文章编辑
 
-请求地址：/admin/article_edit
+请求地址：/admin/article/edit
 
 请求方式：post
 
@@ -575,7 +601,6 @@
 
 | 名称    | 类型   | 说明         |
 | ------- | ------ | ------------ |
-| token   | string | 用户token    |
 | id      | number | 文章id       |
 | title   | string | 文章标题     |
 | cover   | file   | 文章封面图片 |
@@ -590,6 +615,8 @@
 | msg  | string | 文字信息  ‘修改成功’   ‘修改失败’ |
 
 
+
+#### 
 
 #### 12、删除文章
 
