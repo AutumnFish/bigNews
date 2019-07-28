@@ -2,6 +2,7 @@
 const Sequelize = require('sequelize');
 const CategoryModel = require('./models/category.js');
 const CommentModel = require('./models/comment.js');
+const ArticleModel = require('./models/article.js');
 const {database,username,password,host}= require('../config')
 
 const sequelize = new Sequelize(database, username, password, {
@@ -16,11 +17,13 @@ const sequelize = new Sequelize(database, username, password, {
 
 const Category = CategoryModel(sequelize, Sequelize);
 const Comment = CommentModel(sequelize, Sequelize);
+const Article = ArticleModel(sequelize, Sequelize);
 
 
 module.exports = {
   sequelize,
   Sequelize,
   Category,
-  Comment
+  Comment,
+  Article
 }
