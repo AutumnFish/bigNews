@@ -10,17 +10,20 @@ const {errorMsg} = reqlib('/utils/message')
 
   
 
-// 中间件 - 评论新增
+// 路由 - 评论新增
 router.post('/post_comment',[
     check('author').not().isEmpty().isLength({max:6}),
     check('content').not().isEmpty(),
     check('articleId').not().isEmpty()
 ],errorMsg,indexController.post_comment)
 
-// 中间件 - 评论列表
+// 路由 - 评论列表
 router.get('/get_comment',[
     check('articleId').not().isEmpty()
 ],errorMsg,indexController.get_comment)
+
+// 路由 - 文章搜索
+router.get('/search',indexController.search)
 
 
 module.exports = router

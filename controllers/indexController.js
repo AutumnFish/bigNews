@@ -1,4 +1,6 @@
-const { Comment, Article } = require("../db")
+const { Comment, Article,Category,Sequelize } = require("../db")
+const Op = Sequelize.Op
+
 const moment = require("moment")
 
 const serverError = res => {
@@ -73,12 +75,94 @@ module.exports = {
         ]
       })
       res.send({
-        code:200,
-        msg:'获取成功'
+        code: 200,
+        msg: "获取成功"
       })
     } catch (error) {
       console.log(error)
       serverError(res)
     }
+  },
+  // 文章搜索
+  async search(req, res) {
+    //   res.send('/query')
+    // 数据获取
+    const { key, type } = req.query
+    let { page, perpage } = req.query
+    page = parseInt(page)
+    perpage = parseInt(perpage)
+    if (!page) {
+      page = 1
+    }
+    if (!perpage) {
+      perpage = 6
+    }
+    // 分页数据判断
+    if (typeof page != "number" || typeof perpage != "number") {
+      return res.send({
+        code: 400,
+        msg: "页码，或者页容量类型错误"
+      })
+    }
+    // 计算跳过的页码
+    const offset = (page - 1) * perpage
+    // 查询条件
+    let where = { isDelete:0 }
+    // 查询关键字
+    if (key) {
+      where[Op.or] = [
+        {
+          title: {
+            [Op.substring]: key
+          },
+          content: {
+            [Op.substring]: key
+          }
+        }
+      ]
+    }
+    // 查询类型
+    if (type) {
+      where["categoryId"] = type
+    }
+    try {
+      // 分页查询
+      let pageArticleRes = await Article.findAll({
+        // 模糊查询
+        where,
+        include: [
+          {
+            model: Comment
+          }
+        ],
+        attributes: { exclude: ["isDelete"] },
+        // 分页
+        limit: perpage,
+        // 跳过页码
+        offset
+      })
+      // 处理评论个数
+      pageArticleRes = JSON.parse(JSON.stringify(pageArticleRes))
+      pageArticleRes.forEach(v=>{
+        v.comments = v.comments.length
+      })
+      // 总页数
+      let totalArticleRes = await Article.findAll({
+        // 模糊查询
+        where
+      })
+      res.send({
+        code: 200,
+        msg: "数据获取成功",
+        data: {
+          totalCount: totalArticleRes.length,
+          data: pageArticleRes
+        }
+      })
+    } catch (error) {
+      // console.log(error);
+      serverError(res)
+    }
+    // res.send("/search")
   }
 }
