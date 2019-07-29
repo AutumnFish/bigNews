@@ -78,7 +78,7 @@
 
 #### 2、文章类型
 
-请求地址：/category
+请求地址：/index/category
 
 请求方式：get
 
@@ -95,7 +95,7 @@
 
 #### 3、热点图
 
-请求地址：/hotpic
+请求地址：/index/hotpic
 
 请求方式：get
 
@@ -112,7 +112,7 @@
 
 #### 4、文章热门排行
 
-请求地址：/rank
+请求地址：/index/rank
 
 请求方式：get
 

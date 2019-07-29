@@ -28,6 +28,8 @@ router.get('/search',indexController.search)
 router.get('/category',indexController.category)
 // 路由 - 热点图
 router.get('/hotpic',indexController.hotpic)
+// 路由 - 文章热门排行
+router.get('/rank',indexController.rank)
 
 
 module.exports = router

@@ -202,5 +202,24 @@ module.exports = {
     } catch (error) {
       serverError(res)
     }
+  },
+  // 文章热门排行
+  async rank(req,res){
+    try {
+      const rankRes = await Article.findAll({
+        order: [
+          ['read', 'DESC'],
+        ],
+        limit: 7,
+        attributes: ["title"]
+      })
+      res.send({
+        code:200,
+        msg:'获取成功',
+        data:rankRes
+      })
+    } catch (error) {
+      serverError(res)
+    }
   }
 }
