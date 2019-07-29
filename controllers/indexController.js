@@ -266,5 +266,30 @@ module.exports = {
       console.log(error)
       serverError(res)
     }
+  },
+  // 最新评论
+  async latest_comment(req,res){
+    try {
+      let latestRes = await Comment.findAll({
+        order: [["id", "DESC"]],
+        limit: 6,
+      })
+      // 处理数据
+      latestRes = JSON.parse(JSON.stringify(latestRes))
+      latestRes.forEach(v => {
+        // 简略信息
+        v.intro = v.content.substring(0, 20) + "..."
+        // 删除内容
+        delete v.content
+      })
+      res.send({
+        code: 200,
+        msg: "获取成功",
+        data: latestRes
+      })
+    } catch (error) {
+      console.log(error)
+      serverError(res)
+    }
   }
 }
