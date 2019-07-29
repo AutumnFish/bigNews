@@ -220,7 +220,7 @@
 
 #### 10、评论列表
 
-请求地址：/get_comment
+请求地址：/index/get_comment
 
 请求方式：get
 
