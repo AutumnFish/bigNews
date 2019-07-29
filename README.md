@@ -129,7 +129,7 @@
 
 #### 5、最新资讯
 
-请求地址：/latest
+请求地址：/index/latest
 
 请求方式：get
 
@@ -137,16 +137,16 @@
 
 返回数据：（只返回5条）
 
-| 名称    | 类型       | 说明             |
-| ------- | ---------- | ---------------- |
-| id      | number类型 | 文章id           |
-| title   | string类型 | 文章标题         |
-| intro   | string类型 | 文章文字内容截取 |
-| cover   | string类型 | 文章封面图片地址 |
-| type    | string类型 | 文章类型         |
-| read    | number类型 | 文章阅读次数     |
-| comment | number类型 | 评论条数         |
-| date    | string类型 | 文章发布时间     |
+| 名称     | 类型       | 说明             |
+| -------- | ---------- | ---------------- |
+| id       | number类型 | 文章id           |
+| title    | string类型 | 文章标题         |
+| intro    | string类型 | 文章文字内容截取 |
+| cover    | string类型 | 文章封面图片地址 |
+| type     | string类型 | 文章类型         |
+| read     | number类型 | 文章阅读次数     |
+| comments | number类型 | 评论条数         |
+| date     | string类型 | 文章发布时间     |
 
 
 

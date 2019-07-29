@@ -30,6 +30,8 @@ router.get('/category',indexController.category)
 router.get('/hotpic',indexController.hotpic)
 // 路由 - 文章热门排行
 router.get('/rank',indexController.rank)
+// 路由 - 文章热门排行
+router.get('/latest',indexController.latest)
 
 
 module.exports = router

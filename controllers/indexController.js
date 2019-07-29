@@ -145,6 +145,9 @@ module.exports = {
       pageArticleRes = JSON.parse(JSON.stringify(pageArticleRes))
       pageArticleRes.forEach(v => {
         v.comments = v.comments.length
+        if (v.cover.indexOf("https://") == -1) {
+          v.cover = `http://localhost:8080/${v.cover}`
+        }
       })
       // 总页数
       let totalArticleRes = await Article.findAll({
@@ -190,35 +193,77 @@ module.exports = {
         attributes: ["cover"]
       })
       picRes.forEach(v => {
-        if (v.cover.indexOf("https://") ==-1) {
+        if (v.cover.indexOf("https://") == -1) {
           v.cover = `http://localhost:8080/${v.cover}`
         }
       })
       res.send({
-        code:200,
-        msg:'获取成功',
-        data:picRes
+        code: 200,
+        msg: "获取成功",
+        data: picRes
       })
     } catch (error) {
       serverError(res)
     }
   },
   // 文章热门排行
-  async rank(req,res){
+  async rank(req, res) {
     try {
       const rankRes = await Article.findAll({
-        order: [
-          ['read', 'DESC'],
-        ],
+        order: [["read", "DESC"]],
         limit: 7,
         attributes: ["title"]
       })
       res.send({
-        code:200,
-        msg:'获取成功',
-        data:rankRes
+        code: 200,
+        msg: "获取成功",
+        data: rankRes
       })
     } catch (error) {
+      serverError(res)
+    }
+  },
+  // 最新资讯
+  async latest(req, res) {
+    try {
+      let latestRes = await Article.findAll({
+        where: {
+          isDelete: 0
+        },
+        order: [["id", "DESC"]],
+        limit: 5,
+        include: [
+          {
+            model: Comment
+          },{
+            model:Category
+          }
+        ],
+        attributes: { exclude: ["isDelete"] }
+      })
+      // 处理数据
+      latestRes = JSON.parse(JSON.stringify(latestRes))
+      latestRes.forEach(v => {
+        // 评论数
+        v.comments = v.comments.length
+        // 简略信息
+        v.intro = v.content.substring(0, 20) + "..."
+        // 删除内容
+        delete v.content
+        // 处理封面
+        if (v.cover.indexOf("https://") == -1) {
+          v.cover = `http://localhost:8080/${v.cover}`
+        }
+        // 处理分类名
+        v.category =v.category.name
+      })
+      res.send({
+        code: 200,
+        msg: "获取成功",
+        data: latestRes
+      })
+    } catch (error) {
+      console.log(error)
       serverError(res)
     }
   }
