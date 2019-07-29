@@ -24,6 +24,8 @@ router.get('/get_comment',[
 
 // 路由 - 文章搜索
 router.get('/search',indexController.search)
+// 路由 - 文章类型
+router.get('/category',indexController.category)
 
 
 module.exports = router

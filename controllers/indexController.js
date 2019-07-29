@@ -1,4 +1,4 @@
-const { Comment, Article,Category,Sequelize } = require("../db")
+const { Comment, Article, Category, Sequelize } = require("../db")
 const Op = Sequelize.Op
 
 const moment = require("moment")
@@ -107,7 +107,7 @@ module.exports = {
     // 计算跳过的页码
     const offset = (page - 1) * perpage
     // 查询条件
-    let where = { isDelete:0 }
+    let where = { isDelete: 0 }
     // 查询关键字
     if (key) {
       where[Op.or] = [
@@ -143,7 +143,7 @@ module.exports = {
       })
       // 处理评论个数
       pageArticleRes = JSON.parse(JSON.stringify(pageArticleRes))
-      pageArticleRes.forEach(v=>{
+      pageArticleRes.forEach(v => {
         v.comments = v.comments.length
       })
       // 总页数
@@ -164,5 +164,21 @@ module.exports = {
       serverError(res)
     }
     // res.send("/search")
+  },
+  // 文章类型
+  async category(req, res) {
+    // 获取类型
+    try {
+      const categoryRes = await Category.findAll({
+        attributes: { exclude: ["slug"] }
+      })
+      res.send({
+        code: 200,
+        msg: "获取成功",
+        data: categoryRes
+      })
+    } catch (error) {
+      serverError(res)
+    }
   }
 }
