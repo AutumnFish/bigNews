@@ -6,6 +6,8 @@ const categoryRouter = require('./category/categoryRouter')
 const articleRouter = require('./article/articleRouter')
 // 评论路由
 const commentRouter = require('./comment/commentRouter')
+// 用户路由
+const userRouter = require('./user/userRouter')
 
 // 中间件 - 分类路由
 router.use('/category',categoryRouter)
@@ -13,6 +15,9 @@ router.use('/category',categoryRouter)
 router.use('/article',articleRouter)
 // 中间件 - 评论路由
 router.use('/comment',commentRouter)
+
+// 中间件 - 用户
+router.use('/user',userRouter)
 
 
 module.exports = router

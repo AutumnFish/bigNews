@@ -347,6 +347,19 @@ module.exports = {
         ],
         attributes: { exclude: ["isDelete"] }
       })
+      // 累加
+      let read = currentArticleRes.read + 1
+      // 累加
+      await Article.update(
+        {
+          read
+        },
+        {
+          where: {
+            id
+          }
+        }
+      )
       currentArticleRes = JSON.parse(JSON.stringify(currentArticleRes))
       // 评论
       currentArticleRes.comments = currentArticleRes.comments.length
@@ -377,6 +390,7 @@ module.exports = {
         },
         attributes: ["id", "title"]
       })
+
       res.send({
         code: 200,
         msg: "获取成功",
