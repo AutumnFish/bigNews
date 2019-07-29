@@ -12,9 +12,9 @@ const {errorMsg} = reqlib('/utils/message')
 
 // 中间件 - 评论新增
 router.post('/post_comment',[
-    check('user_name').not().isEmpty(),
+    check('author').not().isEmpty().isLength({max:6}),
     check('content').not().isEmpty(),
-    check('aid').not().isEmpty()
+    check('articleId').not().isEmpty()
 ],errorMsg,indexController.post_comment)
 
 

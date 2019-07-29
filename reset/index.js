@@ -17,7 +17,7 @@ function randomData(num) {
         author: "@cname",
         // 内容
         content: "@csentence(8,32)",
-        date: "@now",
+        date: "@datetime",
         articleId:"@natural(1,220)",
         state:"待审核"
       }

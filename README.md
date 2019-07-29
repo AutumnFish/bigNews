@@ -210,7 +210,7 @@
 
 | 名称      | 类型   | 说明     |
 | --------- | ------ | -------- |
-| user_name | string | 用户名称 |
+| author    | string | 用户名称 |
 | content   | string | 评论内容 |
 | articleId | number | 文章id   |
 
@@ -770,16 +770,15 @@
 
 #### 18、评论审核通过
 
-请求地址：/admin/comment_pass
+请求地址：/admin/comment/pass
 
 请求方式：post
 
 请求参数：
 
-| 名称  | 类型   | 说明      |
-| ----- | ------ | --------- |
-| token | string | 用户token |
-| id    | number | 评论id    |
+| 名称 | 类型   | 说明   |
+| ---- | ------ | ------ |
+| id   | number | 评论id |
 
 返回数据：
 
@@ -791,16 +790,15 @@
 
 #### 19、评论审核不通过
 
-请求地址：/admin/comment_reject
+请求地址：/admin/comment/reject
 
 请求方式：post
 
 请求参数：
 
-| 名称  | 类型   | 说明      |
-| ----- | ------ | --------- |
-| token | string | 用户token |
-| id    | number | 评论id    |
+| 名称 | 类型   | 说明   |
+| ---- | ------ | ------ |
+| id   | number | 评论id |
 
 返回数据：
 
@@ -812,16 +810,15 @@
 
 #### 20、删除评论
 
-请求地址：/admin/comment_delete
+请求地址：/admin/comment/delete
 
 请求方式：post
 
 请求参数：
 
-| 名称  | 类型   | 说明      |
-| ----- | ------ | --------- |
-| token | string | 用户token |
-| id    | number | 评论id    |
+| 名称 | 类型   | 说明   |
+| ---- | ------ | ------ |
+| id   | number | 评论id |
 
 返回数据：
 
