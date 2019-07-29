@@ -1,4 +1,4 @@
-const { Category, Article ,Sequelize} = require("../db")
+const { Category, Article, Sequelize } = require("../db")
 const { baseUrl } = reqlib("/config")
 const fs = require("fs")
 const path = require("path")
@@ -18,7 +18,7 @@ module.exports = {
       // 判断文章分类id是否存在
       const findResult = await Category.findAll({
         where: {
-          id:categoryId
+          id: categoryId
         }
       })
       if (findResult.length == 0) {
@@ -39,10 +39,10 @@ module.exports = {
         date,
         content,
         cover,
-        isDelete:0,
-        state:'草稿',
-        author:'管理员',
-        read:0
+        isDelete: 0,
+        state: "草稿",
+        author: "管理员",
+        read: 0
       })
       // 返回提示消息
       res.send({
@@ -53,40 +53,43 @@ module.exports = {
       serverError(res)
     }
   },
-  // 根据id获取文章
+  // 根据id获取文章         
   async search(req, res) {
     const { id } = req.query
-
     try {
-      const findRes = await Article.findAll({
+      let findRes = await Article.findOne({
         where: {
           id,
-          isDelete:0
+          isDelete: 0
         },
-        include:[{
-          model:Category,
-          where:{categoryId:Sequelize.col('article.id')}
-        }]
+        include: [
+          {
+            model: Category,
+          }
+        ],
+        attributes: { exclude: ["read", "isDelete",['category']] }
+        // 查询指定字段
       })
-      if (findRes.length == 0) {
+      if (!findRes) {
         return res.send({
           msg: "数据有问题,请检查",
           code: 400
         })
       }
       // 返回获取到的数据
-      let [data] = findRes
-      console.log(data.cover)
-      if(data.cover.indexOf('htps://')==-1){
-        data.cover = `${baseUrl}/${data.cover}`
+      if (findRes.cover.indexOf("htps://") == -1) {
+        findRes.cover = `${baseUrl}/${findRes.cover}`
       }
+      // 处理数据
+      findRes = JSON.parse(JSON.stringify(findRes))
+      // 删除 category字段
+      delete findRes.category
       res.send({
         code: 200,
         msg: "获取成功",
-        data
+        data:findRes
       })
     } catch (error) {
-      console.log(error);
       serverError(res)
     }
   },
@@ -99,7 +102,7 @@ module.exports = {
       const articleRes = await Article.findAll({
         where: {
           id,
-          isDelete:0
+          isDelete: 0
         }
       })
       // 检验文章id是否正确
@@ -173,40 +176,42 @@ module.exports = {
 
       // 获取最新的值
     } catch (error) {
-      console.log(error)
       serverError(res)
     }
   },
   // 删除文章
-  async _delete(req,res){
+  async _delete(req, res) {
     // 获取id
-    const {id} = req.query
+    const { id } = req.query
     try {
       const articleRes = await Article.findAll({
-        where:{
+        where: {
           id,
-          isDelete:0
+          isDelete: 0
         }
       })
-      if(articleRes.length==0){
+      if (articleRes.length == 0) {
         return res.send({
-           msg:'id有误,请检查',
-           code:400
+          msg: "id有误,请检查",
+          code: 400
         })
       }
       // 修改数据
-      const result = await Article.update({
-        isDelete:1,
-      },{
-        where:{
-          id
+      const result = await Article.update(
+        {
+          isDelete: 1
+        },
+        {
+          where: {
+            id
+          }
         }
-      })
+      )
       // res.send(result)
-      if(result[0]==1){
+      if (result[0] == 1) {
         res.send({
-          code:204,
-          msg:'文章删除成功'
+          code: 204,
+          msg: "文章删除成功"
         })
       }
     } catch (error) {
