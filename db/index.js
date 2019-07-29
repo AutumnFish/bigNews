@@ -12,7 +12,9 @@ const sequelize = new Sequelize(database, username, password, {
     // `timestamps` 字段指定是否将创建 `createdAt` 和 `updatedAt` 字段.
     // 该值默认为 true, 但是当前设定为 false
     timestamps: false
-  }
+  },
+  // 打印sql语句
+  logging:false
 });
 
 const Category = CategoryModel(sequelize, Sequelize);

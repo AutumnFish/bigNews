@@ -1,4 +1,4 @@
-const { Comment, Article, Category, Sequelize } = require("../db")
+const { Comment, Article, Category, Sequelize, sequelize } = require("../db")
 const Op = Sequelize.Op
 
 const moment = require("moment")
@@ -176,6 +176,28 @@ module.exports = {
         code: 200,
         msg: "获取成功",
         data: categoryRes
+      })
+    } catch (error) {
+      serverError(res)
+    }
+  },
+  // 热点图
+  async hotpic(req, res) {
+    try {
+      const picRes = await Article.findAll({
+        order: sequelize.random(),
+        limit: 5,
+        attributes: ["cover"]
+      })
+      picRes.forEach(v => {
+        if (v.cover.indexOf("https://") ==-1) {
+          v.cover = `http://localhost:8080/${v.cover}`
+        }
+      })
+      res.send({
+        code:200,
+        msg:'获取成功',
+        data:picRes
       })
     } catch (error) {
       serverError(res)

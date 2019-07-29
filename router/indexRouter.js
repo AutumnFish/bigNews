@@ -26,6 +26,8 @@ router.get('/get_comment',[
 router.get('/search',indexController.search)
 // 路由 - 文章类型
 router.get('/category',indexController.category)
+// 路由 - 热点图
+router.get('/hotpic',indexController.hotpic)
 
 
 module.exports = router
