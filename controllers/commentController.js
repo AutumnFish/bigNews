@@ -51,5 +51,49 @@ module.exports = {
     } catch (error) {
       serverError(res)
     }
+  },
+  // 评论审核不通过
+  async reject(req,res){
+     // 获取id
+     const { id } = req.body
+     try {
+       // 查询数据
+       const commentRes = await Comment.findOne({
+         where: {
+           id
+         }
+       })
+       // id判断
+       if (!commentRes) {
+         res.send({
+           code: 400,
+           msg: "id有误,请检查"
+         })
+       }
+       // 修改评论状态
+       const updateRes = await Comment.update(
+         {
+           state: "已拒绝"
+         },
+         {
+           where: {
+             id
+           }
+         }
+       )
+       if (updateRes[0] == 1) {
+         res.send({
+           msg: "已拒绝",
+           code: 200
+         })
+       } else {
+         res.send({
+           msg: "已拒绝，不要重复操作",
+           code: 400
+         })
+       }
+     } catch (error) {
+       serverError(res)
+     }
   }
 }
