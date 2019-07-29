@@ -23,14 +23,26 @@ router.post(
 
 // 注册路由 - 评论审核不通过
 router.post(
-    "/reject",
-    [
-      check("id")
-        .not()
-        .isEmpty()
-    ],
-    errorMsg,
-    commentController.reject
-  )
+  "/reject",
+  [
+    check("id")
+      .not()
+      .isEmpty()
+  ],
+  errorMsg,
+  commentController.reject
+)
+
+// 注册路由 - 删除评论
+router.post(
+  "/delete",
+  [
+    check("id")
+      .not()
+      .isEmpty()
+  ],
+  errorMsg,
+  commentController._delete
+)
 
 module.exports = router
