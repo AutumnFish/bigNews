@@ -4,7 +4,7 @@ const Op = Sequelize.Op
 const moment = require("moment")
 
 const serverError = res => {
-  res.status(500).send({
+  res.send({
     code: 500,
     msg: "服务器内部错误"
   })
@@ -133,6 +133,9 @@ module.exports = {
         include: [
           {
             model: Comment
+          },
+          {
+            model: Category
           }
         ],
         attributes: { exclude: ["isDelete"] },
@@ -148,6 +151,8 @@ module.exports = {
         if (v.cover.indexOf("https://") == -1) {
           v.cover = `http://localhost:8080/${v.cover}`
         }
+        // 类型
+        v.category = v.category.name
       })
       // 总页数
       let totalArticleRes = await Article.findAll({
@@ -235,8 +240,9 @@ module.exports = {
         include: [
           {
             model: Comment
-          },{
-            model:Category
+          },
+          {
+            model: Category
           }
         ],
         attributes: { exclude: ["isDelete"] }
@@ -255,7 +261,7 @@ module.exports = {
           v.cover = `http://localhost:8080/${v.cover}`
         }
         // 处理分类名
-        v.category =v.category.name
+        v.category = v.category.name
       })
       res.send({
         code: 200,
@@ -268,11 +274,11 @@ module.exports = {
     }
   },
   // 最新评论
-  async latest_comment(req,res){
+  async latest_comment(req, res) {
     try {
       let latestRes = await Comment.findAll({
         order: [["id", "DESC"]],
-        limit: 6,
+        limit: 6
       })
       // 处理数据
       latestRes = JSON.parse(JSON.stringify(latestRes))
@@ -289,6 +295,98 @@ module.exports = {
       })
     } catch (error) {
       console.log(error)
+      serverError(res)
+    }
+  },
+  // 焦点关注
+  async attention(req, res) {
+    try {
+      let attentionRes = await Article.findAll({
+        where: {
+          isDelete: 0
+        },
+        order: sequelize.random(),
+        limit: 7,
+        attributes: ["content"]
+      })
+      // 处理数据
+      attentionRes = JSON.parse(JSON.stringify(attentionRes))
+      attentionRes.forEach(v => {
+        // 简略信息
+        v.intro = v.content.substring(0, 20) + "..."
+        // 删除内容
+        delete v.content
+      })
+      res.send({
+        code: 200,
+        msg: "获取成功",
+        data: attentionRes
+      })
+    } catch (error) {
+      console.log(error)
+      serverError(res)
+    }
+  },
+  // 文章详细内容
+  async article(req, res) {
+    const { id } = req.query
+    try {
+      // 获取当前这一篇
+      let currentArticleRes = await Article.findOne({
+        where: {
+          id,
+          isDelete: 0
+        },
+        include: [
+          {
+            model: Comment
+          },
+          {
+            model: Category
+          }
+        ],
+        attributes: { exclude: ["isDelete"] }
+      })
+      currentArticleRes = JSON.parse(JSON.stringify(currentArticleRes))
+      // 评论
+      currentArticleRes.comments = currentArticleRes.comments.length
+      // 分类
+      currentArticleRes.category = currentArticleRes.category.name
+      // 查找上一个
+      const prev = await Article.findOne({
+        where: {
+          id: {
+            [Op.lt]: id
+          },
+
+          isDelete: 0
+        },
+        order: [
+          // 根据id倒序
+          ["id", "DESC"]
+        ],
+        attributes: ["id", "title"]
+      })
+      // 查找下一个
+      const next = await Article.findOne({
+        where: {
+          id: {
+            [Op.gt]: id
+          },
+          isDelete: 0
+        },
+        attributes: ["id", "title"]
+      })
+      res.send({
+        code: 200,
+        msg: "获取成功",
+        data: {
+          ...currentArticleRes,
+          prev,
+          next
+        }
+      })
+    } catch (error) {
       serverError(res)
     }
   }

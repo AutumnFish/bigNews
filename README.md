@@ -39,7 +39,7 @@
 | :---: | :----: | ------------------------------------------------------------ |
 | pages | number | 总页数                                                       |
 | page  | number | 当前页                                                       |
-| data  | array  | 文章数据数组，其中每个成员包含字段：<br />id: number类型，文章id<br />title:  string类型，文章标题<br />intro: string类型，文章文字内容截取<br />cover: string类型，文章封面图片地址<br />type: string类型，文章类型<br />read: number类型，文章阅读次数<br />comment: number类型，文章评论次数<br />date:string类型， 文章发布时间 |
+| data  | array  | 文章数据数组，其中每个成员包含字段：<br />id: number类型，文章id<br />title:  string类型，文章标题<br />intro: string类型，文章文字内容截取<br />cover: string类型，文章封面图片地址<br />category: string类型，文章类型<br />read: number类型，文章阅读次数<br />comment: number类型，文章评论次数<br />date:string类型， 文章发布时间 |
 
 返回数据结构示例：
 
@@ -152,7 +152,7 @@
 
 #### 6、最新评论
 
-请求地址：/latest_comment
+请求地址：/index/latest_comment
 
 请求方式：get
 
@@ -160,21 +160,33 @@
 
 返回数据：（只返回6条）
 
-|   名称    |  类型  | 说明         |
-| :-------: | :----: | ------------ |
-| user_name | string | 用户名称     |
-|   date    | string | 评论时间     |
-|   intro   | string | 评论内容截取 |
+|  名称  |  类型  | 说明         |
+| :----: | :----: | ------------ |
+| author | string | 用户名称     |
+|  date  | string | 评论时间     |
+| intro  | string | 评论内容截取 |
 
 
 
-#### 7、焦点关注 ？
+#### 7、焦点关注 
+
+请求地址：/index/attention
+
+请求方式：get
+
+请求参数：无
+
+返回数据：（只返回7条）
+
+| 名称  | 类型       | 说明         |
+| ----- | ---------- | ------------ |
+| intro | string类型 | 文章内容截取 |
 
 
 
 #### 8、文章详细内容
 
-请求地址：/artitle
+请求地址：/index/artitle
 
 请求方式：get
 
@@ -186,17 +198,17 @@
 
 返回数据：
 
-| 名称    | 类型   | 说明                                                         |
-| ------- | ------ | ------------------------------------------------------------ |
-| title   | string | 文章标题                                                     |
-| author  | string | 文章作者                                                     |
-| type    | string | 文章类型                                                     |
-| date    | string | 文章发布时间                                                 |
-| read    | number | 阅读次数                                                     |
-| comment | number | 评论条数                                                     |
-| content | string | 文章内容                                                     |
-| prev    | array  | 上一篇文章<br />id： 上一篇文章的id<br />title：上一篇文章的标题 |
-| next    | array  | 下一篇文章<br />id： 下一篇文章的id<br />title：下一篇文章的标题 |
+| 名称     | 类型   | 说明                                                         |
+| -------- | ------ | ------------------------------------------------------------ |
+| title    | string | 文章标题                                                     |
+| author   | string | 文章作者                                                     |
+| type     | string | 文章类型                                                     |
+| date     | string | 文章发布时间                                                 |
+| read     | number | 阅读次数                                                     |
+| comments | number | 评论条数                                                     |
+| content  | string | 文章内容                                                     |
+| prev     | array  | 上一篇文章<br />id： 上一篇文章的id<br />title：上一篇文章的标题 |
+| next     | array  | 下一篇文章<br />id： 下一篇文章的id<br />title：下一篇文章的标题 |
 
 
 

@@ -34,6 +34,10 @@ router.get('/rank',indexController.rank)
 router.get('/latest',indexController.latest)
 // 路由 - 最新评论
 router.get('/latest_comment',indexController.latest_comment)
+// 路由 - 焦点关注
+router.get('/attention',indexController.attention)
+// 路由 - 文章详情
+router.get('/article',indexController.article)
 
 
 module.exports = router
