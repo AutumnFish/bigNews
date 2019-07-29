@@ -1,4 +1,6 @@
 const { Category, Article, Sequelize } = require("../db")
+// 获取运算符
+const Op = Sequelize.Op
 const { baseUrl } = reqlib("/config")
 const fs = require("fs")
 const path = require("path")
@@ -53,7 +55,7 @@ module.exports = {
       serverError(res)
     }
   },
-  // 根据id获取文章         
+  // 根据id获取文章
   async search(req, res) {
     const { id } = req.query
     try {
@@ -64,10 +66,10 @@ module.exports = {
         },
         include: [
           {
-            model: Category,
+            model: Category
           }
         ],
-        attributes: { exclude: ["read", "isDelete",['category']] }
+        attributes: { exclude: ["read", "isDelete", ["category"]] }
         // 查询指定字段
       })
       if (!findRes) {
@@ -87,7 +89,7 @@ module.exports = {
       res.send({
         code: 200,
         msg: "获取成功",
-        data:findRes
+        data: findRes
       })
     } catch (error) {
       serverError(res)
@@ -214,6 +216,80 @@ module.exports = {
           msg: "文章删除成功"
         })
       }
+    } catch (error) {
+      serverError(res)
+    }
+  },
+  // 搜索文航
+  async query(req, res) {
+    //   res.send('/query')
+    // 数据获取
+    const { key, type, state } = req.query
+    let { page, perpage } = req.query
+    // 查询状态判断
+    if (["草稿", "已发布"].indexOf(state) == -1) {
+      return res.send({
+        code: 400,
+        msg: "文章状态传递错误，请检查"
+      })
+    }
+    if (!page) {
+      page = 1
+    }
+    if (!perpage) {
+      perpage = 6
+    }
+    // 分页数据判断
+    if (typeof page != "number" || typeof perpage != "number") {
+      return res.send({
+        code: 400,
+        msg: "页码，或者页容量类型错误"
+      })
+    }
+    // 计算跳过的页码
+    const offset = (page - 1) * perpage
+    // 查询条件
+    let where = { state }
+    // 查询关键字
+    if (key) {
+      where[Op.or] = [
+        {
+          title: {
+            [Op.substring]: key
+          },
+          content: {
+            [Op.substring]: key
+          }
+        }
+      ]
+    }
+    // 查询类型
+    if (type) {
+      where["categoryId"] = type
+    }
+    try {
+      // 分页查询
+      let pageArticleRes = await Article.findAll({
+        // 模糊查询
+        where,
+        // 分页
+        limit: perpage,
+        // 跳过页码
+        offset
+      })
+      // 总页数
+      let totalArticleRes = await Article.findAll({
+        // 模糊查询
+        where
+      })
+      res.send({
+        code: 200,
+        msg: "数据获取成功",
+        data: {
+          totalCount: totalArticleRes.length,
+          data: pageArticleRes
+        }
+      })
     } catch (error) {
       serverError(res)
     }

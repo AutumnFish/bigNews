@@ -96,4 +96,9 @@ router.post("/edit", typeCheck,[
 router.get('/delete',[
   check('id').not().isEmpty()
 ],errorMsg,articleController._delete)
+
+// 注册路由 - 文章搜索
+router.get('/query',articleController.query)
+
+
 module.exports = router
