@@ -699,10 +699,6 @@
 | name | string | 类别名称 |
 | slug | string | 别名     |
 
-
-
-#### 
-
 #### 16、编辑文章类别
 
 请求地址：/admin/category/edit

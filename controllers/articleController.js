@@ -74,16 +74,23 @@ module.exports = {
       })
       if (!findRes) {
         return res.send({
-          msg: "数据有问题,请检查",
-          code: 400
+          code: 400,
+          msg: "id有误，请检查"
+        })
+      }
+      // 处理数据
+      findRes = JSON.parse(JSON.stringify(findRes))
+      // 判断分类是否已经不存在
+      if (!findRes.categoryId) {
+        return res.send({
+          code: 400,
+          msg: "id有误，请检查"
         })
       }
       // 返回获取到的数据
       if (findRes.cover.indexOf("htps://") == -1) {
         findRes.cover = `${baseUrl}/${findRes.cover}`
       }
-      // 处理数据
-      findRes = JSON.parse(JSON.stringify(findRes))
       // 删除 category字段
       delete findRes.category
       res.send({
