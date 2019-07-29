@@ -8,16 +8,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       },
-      aid: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
       date: {
         type: DataTypes.STRING,
         allowNull: false
       },
       state: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false
       }
     });

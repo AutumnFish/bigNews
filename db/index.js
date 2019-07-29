@@ -19,11 +19,14 @@ const Category = CategoryModel(sequelize, Sequelize);
 const Comment = CommentModel(sequelize, Sequelize);
 const Article = ArticleModel(sequelize, Sequelize);
 
-// 定义 分类 ->文章 一对多
+// 定义关联 分类 ->文章 一对多
 // console.log(Category.hasMany)
 Category.hasMany(Article)
 Article.belongsTo(Category)
 
+// 定义关联 文章 ->分类 一对多
+Article.hasMany(Comment)
+Comment.belongsTo(Article)
 module.exports = {
   sequelize,
   Sequelize,
