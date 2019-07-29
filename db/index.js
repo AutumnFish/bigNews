@@ -3,6 +3,7 @@ const Sequelize = require('sequelize');
 const CategoryModel = require('./models/category.js');
 const CommentModel = require('./models/comment.js');
 const ArticleModel = require('./models/article.js');
+const UserModel = require('./models/user.js');
 const {database,username,password,host}= require('../config')
 
 const sequelize = new Sequelize(database, username, password, {
@@ -20,6 +21,7 @@ const sequelize = new Sequelize(database, username, password, {
 const Category = CategoryModel(sequelize, Sequelize);
 const Comment = CommentModel(sequelize, Sequelize);
 const Article = ArticleModel(sequelize, Sequelize);
+const User = UserModel(sequelize, Sequelize);
 
 // 定义关联 分类 ->文章 一对多
 // console.log(Category.hasMany)
@@ -34,5 +36,6 @@ module.exports = {
   Sequelize,
   Category,
   Comment,
-  Article
+  Article,
+  User
 }
