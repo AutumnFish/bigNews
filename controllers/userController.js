@@ -1,5 +1,9 @@
 const { User } = require("../db")
 
+// 导入fs
+const fs = require("fs")
+const path = require("path")
+
 const serverError = res => {
   res.status(500).send({
     code: 500,
@@ -66,7 +70,7 @@ module.exports = {
         where: {
           id: 1
         },
-        attributes: ["nickname", "userPic",'email','password','username']
+        attributes: ["nickname", "userPic", "email", "password", "username"]
       })
       userRes = JSON.parse(JSON.stringify(userRes))
       userRes.userPic = `http://localhost:8080/${userRes.userPic}`
@@ -76,6 +80,44 @@ module.exports = {
         data: userRes
       })
     } catch (error) {
+      serverError(res)
+    }
+  },
+  // 编辑用户信息
+  async edit(req, res) {
+    // 获取信息
+    const { username, nickname, email, password } = req.body
+    let updateOpt = { username, nickname, email, password }
+    try {
+      let userRes = {}
+      // 获取图片
+      if (req.file) {
+        // 获取封面
+        const { filename: userPic } = req.file
+        updateOpt["userPic"] = userPic
+        // 删除之前的那个图片
+        userRes = await User.findOne({
+          where: {
+            id: 1
+          }
+        })
+      }
+      // 更新数据
+
+      const updateRes = await User.update(updateOpt, {
+        where: {
+          id: 1
+        }
+      })
+
+      res.send({
+        code: 200,
+        msg: "更新成功"
+      })
+      // 删除文件
+      fs.unlinkSync(path.join(__dirname, "../uploads/", userRes.userPic))
+    } catch (error) {
+      console.log(error)
       serverError(res)
     }
   }

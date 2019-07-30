@@ -853,7 +853,7 @@
 
 #### 22、编辑用户信息
 
-请求地址：/admin/userinfo_edit
+请求地址：/admin/user/edit
 
 请求方式：post
 
@@ -861,7 +861,6 @@
 
 |   名称   |  类型  | 说明         |
 | :------: | :----: | ------------ |
-|  token   | string | 用户token    |
 | username | string | 用户名称     |
 | nickname | string | 用户昵称     |
 |  email   | string | 用户邮箱     |
