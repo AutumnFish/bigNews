@@ -12,17 +12,21 @@ module.exports = {
     try {
       // 文章总数
       const totalArticle = await Article.count()
-      const dayArticle = await Article.count({
+      let dayArticle = await Article.count({
         group: "date",
         attributes:['date'],
         order: [["date", "DESC"]]
       })
       const totalComment = await Comment.count()
-      const dayComment = await Comment.count({
+      let dayComment = await Comment.count({
         group: "date",
         order: [["date", "DESC"]],
         attributes:['date']
       })
+      // 计算每日文章数
+      dayArticle = parseInt( totalArticle/dayArticle.length)
+      // 计算每日评论数
+      dayComment = parseInt( totalComment/dayComment.length)
       res.send({
         totalArticle,
         dayArticle,
