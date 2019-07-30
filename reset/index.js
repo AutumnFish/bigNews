@@ -32,6 +32,11 @@ function randomData(num) {
   })
 }
 
+
+// 生成随机的访问量
+articleData.forEach(v=>{
+  v.read =  parseInt(Math.random()*1000)
+})
 db.sequelize.sync({ force: true }).then(async () => {
   try {
     await db.Category.bulkCreate(categoryData)

@@ -14,19 +14,19 @@ module.exports = {
       const totalArticle = await Article.count()
       let dayArticle = await Article.count({
         group: "date",
-        attributes:['date'],
+        attributes: ["date"],
         order: [["date", "DESC"]]
       })
       const totalComment = await Comment.count()
       let dayComment = await Comment.count({
         group: "date",
         order: [["date", "DESC"]],
-        attributes:['date']
+        attributes: ["date"]
       })
       // 计算每日文章数
-      dayArticle = parseInt( totalArticle/dayArticle.length)
+      dayArticle = parseInt(totalArticle / dayArticle.length)
       // 计算每日评论数
-      dayComment = parseInt( totalComment/dayComment.length)
+      dayComment = parseInt(totalComment / dayComment.length)
       res.send({
         totalArticle,
         dayArticle,
@@ -37,8 +37,36 @@ module.exports = {
       serverError(res)
     }
   },
-  async comment(req, res) {
-    res.send("/comment")
+  // 文章访问量
+  async visit(req, res) {
+    try {
+      const dateRes = await Article.findAll({
+        group: "date",
+        attributes: ["date"]
+      })
+      // 准备拼接数据
+      const visitData = {}
+      let startIndex = dateRes.length - 1
+      if (startIndex < 0) {
+        startIndex = 0
+      }
+      let endIndex = startIndex - 7
+      if (endIndex < 0) {
+        endIndex = 0
+      }
+      for (let i = startIndex; i > endIndex; i--) {
+        visitData[dateRes[i].date] = await Article.sum("read", {
+          where: {
+            date: dateRes[i].date
+          }
+        })
+      }
+      res.send({
+        code: 200,
+        msg: "日访问量统计数据获取成功",
+        data:visitData
+      })
+    } catch (error) {}
   },
   async category(req, res) {
     try {
