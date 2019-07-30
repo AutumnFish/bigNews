@@ -12,23 +12,22 @@ module.exports = {
   async login(req, res) {
     const { username, password } = req.body
     try {
-      let userRes =  await User.findOne({
-        where:{
+      let userRes = await User.findOne({
+        where: {
           username,
           password
         }
       })
-      if(!userRes){
+      if (!userRes) {
         return res.send({
-          code:400,
-          msg:"用户名或密码错误"
+          code: 400,
+          msg: "用户名或密码错误"
         })
       }
       res.send({
-        code:200,
-        msg:'登录成功'
+        code: 200,
+        msg: "登录成功"
       })
-      
     } catch (error) {
       serverError(res)
     }
@@ -41,24 +40,43 @@ module.exports = {
     })
   },
   // 获取用户信息
-  async info(req,res){
+  async info(req, res) {
     try {
-      let userRes= await User.findOne({
-        where:{
-          id:1
+      let userRes = await User.findOne({
+        where: {
+          id: 1
         },
-        attributes:['nickname','userPic']
+        attributes: ["nickname", "userPic"]
       })
       userRes = JSON.parse(JSON.stringify(userRes))
       userRes.userPic = `http://localhost:8080/${userRes.userPic}`
       res.send({
-        code:200,
-        msg:'获取成功',
-        data:userRes
+        code: 200,
+        msg: "获取成功",
+        data: userRes
       })
     } catch (error) {
-      console.log(error);
-        serverError(res)
+      serverError(res)
+    }
+  },
+  // 获取用户详情
+  async detail(req, res) {
+    try {
+      let userRes = await User.findOne({
+        where: {
+          id: 1
+        },
+        attributes: ["nickname", "userPic",'email','password','username']
+      })
+      userRes = JSON.parse(JSON.stringify(userRes))
+      userRes.userPic = `http://localhost:8080/${userRes.userPic}`
+      res.send({
+        code: 200,
+        msg: "获取成功",
+        data: userRes
+      })
+    } catch (error) {
+      serverError(res)
     }
   }
 }
