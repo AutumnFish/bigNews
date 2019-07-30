@@ -1,4 +1,4 @@
-const { Category } = require("../db")
+const { User } = require("../db")
 
 const serverError = res => {
   res.status(500).send({
@@ -9,18 +9,28 @@ const serverError = res => {
 
 module.exports = {
   // 用户登录
-  login(req, res) {
+  async login(req, res) {
     const { username, password } = req.body
-    if (username == "admin" && password == 123456) {
-      res.send({
-        code: 200,
-        msg: "登录成功"
+    try {
+      let userRes =  await User.findOne({
+        where:{
+          username,
+          password
+        }
       })
-    } else {
+      if(!userRes){
+        return res.send({
+          code:400,
+          msg:"用户名或密码错误"
+        })
+      }
       res.send({
-        code: 400,
-        msg: "用户名或密码错误"
+        code:200,
+        msg:'登录成功'
       })
+      
+    } catch (error) {
+      serverError(res)
     }
   },
   // 用户退出
