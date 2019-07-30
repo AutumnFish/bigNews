@@ -39,5 +39,26 @@ module.exports = {
       code: 200,
       msg: "退出成功"
     })
+  },
+  // 获取用户信息
+  async info(req,res){
+    try {
+      let userRes= await User.findOne({
+        where:{
+          id:1
+        },
+        attributes:['nickname','userPic']
+      })
+      userRes = JSON.parse(JSON.stringify(userRes))
+      userRes.userPic = `http://localhost:8080/${userRes.userPic}`
+      res.send({
+        code:200,
+        msg:'获取成功',
+        data:userRes
+      })
+    } catch (error) {
+      console.log(error);
+        serverError(res)
+    }
   }
 }

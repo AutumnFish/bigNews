@@ -26,6 +26,9 @@ app.use(morgan("tiny"))
 app.use("/admin", adminRouter)
 // 中间件 - 路由 - index
 app.use("/index", indexRouter)
+
+// 中间件 - 托管静态资源
+app.use(express.static('uploads'))
  
 db.sequelize.sync({ force: false }).then(() => {
   app.listen(8080, () => {

@@ -26,5 +26,7 @@ router.post(
 
 // 用户登出
 router.post('/logout',userController.logout)
+// 获取用户信息
+router.get('/info',userController.info)
 
 module.exports = router
