@@ -1,6 +1,30 @@
-## 运行说明
-双击 开启.bat 运行项目
-重置数据 
+## 运行说明 - 数据库
+1. 项目的数据保存在mysql中,先保证打开mysql
+2. 在数据库中新建一个库`bignews`
+3. 打开config.js中的 下面几个地方,调整成和自己数据库设置相同的设置
+```
+    // 库名
+    database:'bignews',
+    // 用户名
+    username:'root',
+    // 密码
+    password:'root',
+    // 主机
+    host:'127.0.0.1',
+```
+
+## 运行说明 - 初始数据
+1. 模拟的数据在reset文件夹中
+2. 用node运行 reset/index.js即可导入测试数据`node reset/index.js`
+3. 等待操作结束
+
+## 运行说明 - 运行项目
+1. 保证上述2步运行完毕之后,双击`开启.bat`即可
+2. 也可以输入命令`node app.js`
+
+## 项目基地址
+项目的基地址是`http://localhost:8080`
+
 
 ## 状态说明
 
