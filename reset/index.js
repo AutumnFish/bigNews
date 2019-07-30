@@ -11,6 +11,7 @@ const path = require('path')
 
 // 生成随机数据
 const Mock = require("mockjs")
+const Random = Mock.Random
 
 // 随机数据的方法
 function randomData(num) {
@@ -22,7 +23,8 @@ function randomData(num) {
         author: "@cname",
         // 内容
         content: "@csentence(8,32)",
-        date: "@datetime",
+        date: "@now('year','yyyy')-@natural(1,7)-@datetime('dd')",
+        time:'@time',
         articleId:"@natural(1,220)",
         state:"待审核"
       }
@@ -34,7 +36,8 @@ db.sequelize.sync({ force: true }).then(async () => {
   try {
     await db.Category.bulkCreate(categoryData)
     await db.Article.bulkCreate(articleData)
-    await db.Comment.bulkCreate(randomData(1000).Comment)
+    await db.Comment.bulkCreate(randomData(8000).Comment)
+    // console.log( randomData(10000).Comment.length)
     await db.User.create(userData)
     await fs.copyFileSync(path.join(__dirname,'./static/icon.jpg'),path.join(__dirname,'../uploads/icon.jpg'))
     // 移动图片

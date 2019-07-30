@@ -8,6 +8,8 @@ const articleRouter = require('./article/articleRouter')
 const commentRouter = require('./comment/commentRouter')
 // 用户路由
 const userRouter = require('./user/userRouter')
+// 用户路由
+const dataRouter = require('./data/dataRouter')
 
 // 中间件 - 分类路由
 router.use('/category',categoryRouter)
@@ -19,5 +21,9 @@ router.use('/comment',commentRouter)
 // 中间件 - 用户
 router.use('/user',userRouter)
 
+// 中间件 - 统计数据
+router.use('/data',dataRouter)
+
 
 module.exports = router
+ 

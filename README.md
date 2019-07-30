@@ -302,47 +302,99 @@
 | nickname | string | 用户昵称     |
 | userPic  | string | 用户图片地址 |
 
+#### 4、获取统计数据
+
+请求地址：/admin/data/info
+
+请求方式：get
+
+请求参数：无
+
+返回数据：
+
+|     名称     |  类型  | 说明         |
+| :----------: | :----: | ------------ |
+| totalArticle | number | 文章总数     |
+|  dayArticle  | number | 日新增文章数 |
+| totalComment | number | 总评论数     |
+|  dayComment  | number | 日新增评论数 |
+
 
 
 #### 4、文章数量统计
 
-请求地址：/admin/article_count
+请求地址：/admin/data/article
 
 请求方式：get
 
 请求参数：
 
-| 名称  | 类型   | 说明      |
-| ----- | ------ | --------- |
-| token | string | 用户token |
-
 返回数据：
 
-|   名称    |  类型  | 说明                 |
-| :-------: | :----: | -------------------- |
-| all_count | number | 文章总数             |
-| day_count | number | 当天文章发布文章总数 |
+```js
+{
+    "code": 200,
+    "msg": "获取成功",
+    "date": [
+        {
+            "date": "12",
+            "count": 6
+        },
+        {
+            "date": "2019-05-20",
+            "count": 23
+        },
+        {
+            "date": "2019-05-21",
+            "count": 19
+        },
+        {
+            "date": "2019-05-22",
+            "count": 29
+        },
+        {
+            "date": "2019-05-23",
+            "count": 24
+        },
+        {
+            "date": "2019-05-24",
+            "count": 28
+        },
+        {
+            "date": "2019-05-25",
+            "count": 28
+        },
+        {
+            "date": "2019-05-26",
+            "count": 19
+        },
+        {
+            "date": "2019-05-27",
+            "count": 25
+        },
+        {
+            "date": "2019-05-28",
+            "count": 25
+        },
+        {
+            "date": "2019-7-30",
+            "count": 3
+        }
+    ]
+}
+```
 
 
 
 #### 5、评论数量统计
 
-请求地址：/admin/comment_count
+请求地址：/admin/data/comment
 
 请求方式：get
 
 请求参数：
 
-| 名称  | 类型   | 说明      |
-| ----- | ------ | --------- |
-| token | string | 用户token |
-
 返回数据：
-
-|   名称    |  类型  | 说明             |
-| :-------: | :----: | ---------------- |
-| all_count | number | 评论总数         |
-| day_count | number | 当天发布评论总数 |
 
 
 
@@ -397,22 +449,42 @@
 
 #### 7、各类型文章数量统计
 
-请求地址：/admin/article_category_count
+请求地址：/admin/data/category
 
 请求方式：get
 
 请求参数：
 
-| 名称  | 类型   | 说明      |
-| ----- | ------ | --------- |
-| token | string | 用户token |
-
 返回数据：（有多少类型，就返回多少条）
 
-|   名称    |  类型  | 说明           |
-| :-------: | :----: | -------------- |
-|   type    | string | 文章类型       |
-| all_count | number | 该类型文章总数 |
+```js
+{
+    "code": 200,
+    "msg": "获取成功",
+    "date": [
+        {
+            "name": "爱旅行",
+            "articles": 41
+        },
+        {
+            "name": "爱生活",
+            "articles": 72
+        },
+        {
+            "name": "爱美食",
+            "articles": 36
+        },
+        {
+            "name": "爱运动",
+            "articles": 47
+        },
+        {
+            "name": "经济特区",
+            "articles": 33
+        }
+    ]
+}
+```
 
 
 
